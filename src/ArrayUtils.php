@@ -77,9 +77,7 @@ class ArrayUtils
      *
      * @throws MissingKeyException
      */
-//TODO REQUIRED SHOULD BE A FUNCTION PARAMETER
-//TODO THE NAME SHOULD BE ALSO DIFFERENT: getValueFromArray extractValueFromArray or extractValue
-    public static function getRequiredArrayValue(string $key, array $array)
+    public static function getValueFromArray(string $key, array $array)
     {
         $keysTree = explode(self::ARRAY_KEYS_LEVEL_SEPARATOR, $key, 2);
         $value = null;
@@ -98,7 +96,7 @@ class ArrayUtils
                 // if we need to iterate again through the given array;
                 if (count($keysTree) === 2) {
                     if (is_array($value)) {
-                        $value = self::getRequiredArrayValue($keysTree[1], $value);
+                        $value = self::getValueFromArray($keysTree[1], $value);
                     } else {
                         throw new MissingKeyException($keysTree[1], "Array key '$keysTree[1]' not found.");
                     }

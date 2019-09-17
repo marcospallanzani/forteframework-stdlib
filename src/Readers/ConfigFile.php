@@ -52,7 +52,7 @@ class ConfigFile implements ArrayableInterface
      */
     public function getValue(string $key)
     {
-        return ArrayUtils::getRequiredArrayValue($key, $this->configEntries);
+        return ArrayUtils::getValueFromArray($key, $this->configEntries);
     }
 
     /**

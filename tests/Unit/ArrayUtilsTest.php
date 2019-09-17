@@ -138,6 +138,6 @@ class ArrayUtilsTest extends BaseTest
         if ($expectException) {
             $this->expectException(MissingKeyException::class);
         }
-        $this->assertEquals($expectedValue, ArrayUtils::getRequiredArrayValue($key, $checkContent));
+        $this->assertEquals($expectedValue, ArrayUtils::getValueFromArray($key, $checkContent));
     }
 }
