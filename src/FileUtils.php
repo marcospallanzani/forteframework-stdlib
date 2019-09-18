@@ -184,6 +184,26 @@ class FileUtils
     }
 
     /**
+     * Append to the given file name the extension for the specified content type.
+     *
+     * @param string $fileName The initial file name.
+     * @param string $contentType The content type.
+     *
+     * @return string The file name with extension appended.
+     *
+     * @throws GeneralException
+     */
+    public static function appendContentTypeExtension(string $fileName, string $contentType): string
+    {
+        $fileExtension = self::getFileExtensionByContentType($contentType);
+        if ($fileExtension) {
+            $fileName .= '.' . $fileExtension;
+        }
+
+        return $fileName;
+    }
+
+    /**
      * Export the given array to the given destination full file path. If no destination
      * full file path is specified, a default path will be generated as follows:
      * - use the $defaultNamePrefix parameter concatenated with the execution timestamp

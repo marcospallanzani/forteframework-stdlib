@@ -237,6 +237,25 @@ class FileUtilsTest extends BaseTest
     }
 
     /**
+     * Test function FileUtils::appendContentTypeExtension().
+     *
+     * @throws GeneralException
+     */
+    public function testAppendContentTypeExtension(): void
+    {
+        $this->assertEquals("test.json", FileUtils::appendContentTypeExtension("test", FileUtils::CONTENT_TYPE_JSON));
+        $this->assertEquals("test.xml", FileUtils::appendContentTypeExtension("test", FileUtils::CONTENT_TYPE_XML));
+        $this->assertEquals("test.yml", FileUtils::appendContentTypeExtension("test", FileUtils::CONTENT_TYPE_YAML));
+        $this->assertEquals("test.ini", FileUtils::appendContentTypeExtension("test", FileUtils::CONTENT_TYPE_INI));
+        $this->assertEquals("test.php", FileUtils::appendContentTypeExtension("test", FileUtils::CONTENT_TYPE_ARRAY));
+        $this->assertEquals("test", FileUtils::appendContentTypeExtension("test", FileUtils::CONTENT_TYPE_ENV));
+
+        $this->expectException(GeneralException::class);
+        $this->expectExceptionMessage("Content type not supported.");
+        FileUtils::appendContentTypeExtension("test", "wrong-content-type");
+    }
+
+    /**
      * Return a list of test cases for the given content and content type.
      *
      * @param array $content
