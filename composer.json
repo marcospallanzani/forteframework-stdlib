@@ -1,6 +1,6 @@
 {
     "name": "forteframework/stdlib",
-    "keywords": ["stardard library"],
+    "keywords": ["standard library"],
     "homepage": "https://www.forteframework.com",
     "description": "ForteFramework Standard Library: a set of classes for general purposes.",
     "version": "1.0.0",
