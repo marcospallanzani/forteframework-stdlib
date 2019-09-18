@@ -250,10 +250,7 @@ class FileUtils
 
             // We define a default name
             $fileName = rtrim($defaultNamePrefix, "_") . "_" . number_format(microtime(true), 12, '', '');
-            $fileExtension = self::getFileExtensionByContentType($contentType);
-            if ($fileExtension) {
-                $fileName .= '.' . $fileExtension;
-            }
+            $fileName = self::appendContentTypeExtension($fileName, $contentType);
             $destinationFullFilePath = $exportDirPath . DIRECTORY_SEPARATOR . $fileName;
         }
 
