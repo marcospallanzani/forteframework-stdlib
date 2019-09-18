@@ -30,7 +30,7 @@ class ConfigFile implements ArrayableInterface
      *
      * @param string $configFilePath The config file to load.
      * @param string $contentType The config file type (accepted values
-     * are the FileParser constants starting with "CONTENT_TYPE").
+     * are the FileUtils constants starting with "CONTENT_TYPE").
      *
      * @throws GeneralException
      */
