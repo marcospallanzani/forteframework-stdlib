@@ -134,7 +134,7 @@ class StringUtils
      *
      * @return bool True if the given check string contains the given 'contain' string; false otherwise.
      */
-    public function contains(string $check, string $contains, bool $caseSensitive = false): bool
+    public static function contains(string $check, string $contains, bool $caseSensitive = false): bool
     {
         if ($caseSensitive) {
             $found = strpos($check, $contains);
