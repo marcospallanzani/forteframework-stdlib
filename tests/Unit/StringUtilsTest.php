@@ -116,7 +116,7 @@ class StringUtilsTest extends BaseTest
     }
 
     /**
-     * Test the StringUtils::greaterThan() method.
+     * Test the StringUtils::differentThan() method.
      */
     public function testDifferentThan(): void
     {
@@ -132,6 +132,26 @@ class StringUtilsTest extends BaseTest
         $this->assertTrue(StringUtils::differentThan($numericContent1, $numericContent2, false));
         $this->assertTrue(StringUtils::differentThan($stringContent1, $stringContent2, true));
         $this->assertFalse(StringUtils::differentThan($stringContent1, $stringContent2, false));
+    }
+
+    /**
+     * Test the StringUtils::contains() method.
+     */
+    public function testContains(): void
+    {
+        $stringContent1 = "This is a test";
+        $stringContent2 = "Different string";
+
+        $this->assertTrue(StringUtils::contains($stringContent1, "is a", true));
+        $this->assertTrue(StringUtils::contains($stringContent1, "is a", false));
+        $this->assertTrue(StringUtils::contains($stringContent1, "iS A", false));
+        $this->assertTrue(StringUtils::contains($stringContent2, "strin", true));
+        $this->assertTrue(StringUtils::contains($stringContent2, "strin", false));
+        $this->assertTrue(StringUtils::contains($stringContent2, "STRIN", false));
+        $this->assertFalse(StringUtils::contains($stringContent1, "iS A", true));
+        $this->assertFalse(StringUtils::contains($stringContent1, "string", true));
+        $this->assertFalse(StringUtils::contains($stringContent2, "is a", true));
+        $this->assertFalse(StringUtils::contains($stringContent2, "STRIN", true));
     }
 
     /**

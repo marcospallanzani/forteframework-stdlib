@@ -126,6 +126,26 @@ class StringUtils
     }
 
     /**
+     * Check if the given check string contains the given 'contain' string.
+     *
+     * @param string $check The string to be checked.
+     * @param string $contains The expected "contain" string.
+     * @param bool $caseSensitive Whether the check should be case sensitive or not.
+     *
+     * @return bool True if the given check string contains the given 'contain' string; false otherwise.
+     */
+    public function contains(string $check, string $contains, bool $caseSensitive = false): bool
+    {
+        if ($caseSensitive) {
+            $found = strpos($check, $contains);
+        } else {
+            $found = stripos($check, $contains);
+        }
+
+        return ((!is_bool($found) && $found >= 0) ? true : false);
+    }
+
+    /**
      * Check if the given check string starts with the given search string.
      *
      * @param string $check The string to be checked.
