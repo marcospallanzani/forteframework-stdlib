@@ -12,6 +12,120 @@ namespace Forte\Stdlib;
 class StringUtils
 {
     /**
+     * Check if the given check string is equal to the given search string.
+     *
+     * @param string $check The string to be checked.
+     * @param string $equalTo The expected equal-to string.
+     * @param bool $caseSensitive Whether the check should be case sensitive or not.
+     *
+     * @return bool True if the given check string is equal to the given
+     * search string; false otherwise.
+     */
+    public static function equalTo(string $check, string $equalTo, bool $caseSensitive = false): bool
+    {
+        if ($caseSensitive) {
+            return strcmp($check, $equalTo) === 0;
+        } else {
+            return strcasecmp($check, $equalTo) === 0;
+        }
+    }
+
+    /**
+     * Check if the given check string is less than the given search string.
+     *
+     * @param string $check The string to be checked.
+     * @param string $lessThan The expected less-than string.
+     * @param bool $caseSensitive Whether the check should be case sensitive or not.
+     *
+     * @return bool True if the given check string is less than the given
+     * search string; false otherwise.
+     */
+    public static function lessThan(string $check, string $lessThan, bool $caseSensitive = false): bool
+    {
+        if ($caseSensitive) {
+            return strcmp($check, $lessThan) < 0;
+        } else {
+            return strcasecmp($check, $lessThan) < 0;
+        }
+    }
+
+    /**
+     * Check if the given check string is less than or equal to the given search string.
+     *
+     * @param string $check The string to be checked.
+     * @param string $lessThanEqualTo The expected less-than/equal-to string.
+     * @param bool $caseSensitive Whether the check should be case sensitive or not.
+     *
+     * @return bool True if the given check string is less than or equal to the given
+     * search string; false otherwise.
+     */
+    public static function lessThanEqualTo(string $check, string $lessThanEqualTo, bool $caseSensitive = false): bool
+    {
+        if ($caseSensitive) {
+            return strcmp($check, $lessThanEqualTo) <= 0;
+        } else {
+            return strcasecmp($check, $lessThanEqualTo) <= 0;
+        }
+    }
+
+    /**
+     * Check if the given check string is greater than the given search string.
+     *
+     * @param string $check The string to be checked.
+     * @param string $greaterThan The expected greater-than string.
+     * @param bool $caseSensitive Whether the check should be case sensitive or not.
+     *
+     * @return bool True if the given check string is greater than the given
+     * search string; false otherwise.
+     */
+    public static function greaterThan(string $check, string $greaterThan, bool $caseSensitive = false): bool
+    {
+        if ($caseSensitive) {
+            return strcmp($check, $greaterThan) > 0;
+        } else {
+            return strcasecmp($check, $greaterThan) > 0;
+        }
+    }
+
+    /**
+     * Check if the given check string is greater than or equal to the given search string.
+     *
+     * @param string $check The string to be checked.
+     * @param string $greaterThanEqualTo The expected greater-than/equal-to string.
+     * @param bool $caseSensitive Whether the check should be case sensitive or not.
+     *
+     * @return bool True if the given check string is greater than or equal to the given
+     * search string; false otherwise.
+     */
+    public static function greaterThanEqualTo(string $check, string $greaterThanEqualTo, bool $caseSensitive = false): bool
+    {
+        if ($caseSensitive) {
+            return strcmp($check, $greaterThanEqualTo) >= 0;
+        } else {
+            return strcasecmp($check, $greaterThanEqualTo) >= 0;
+        }
+    }
+
+    /**
+     * Check if the given check string is different than the given search string.
+     *
+     * @param string $check The string to be checked.
+     * @param string $differentThan The expected different-than string.
+     * @param bool $caseSensitive Whether the check should be case sensitive or not.
+     *
+     * @return bool True if the given check string is different than the given
+     * search string; false otherwise.
+     */
+    public static function differentThan(string $check, string $differentThan, bool $caseSensitive = false): bool
+    {
+        if ($caseSensitive) {
+            return strcmp($check, $differentThan) !== 0;
+        } else {
+            return strcasecmp($check, $differentThan) !== 0;
+        }
+    }
+
+    /**
      * Check if the given check string starts with the given search string.
      *
      * @param string $check The string to be checked.

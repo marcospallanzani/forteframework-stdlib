@@ -35,6 +35,106 @@ class StringUtilsTest extends BaseTest
     }
 
     /**
+     * Test the StringUtils::equalTo() method.
+     */
+    public function testEqualTo(): void
+    {
+        $this->assertTrue(StringUtils::equalTo("This is a test", "This is a test", false));
+        $this->assertTrue(StringUtils::equalTo("This is a test", "This is a test", true));
+        $this->assertTrue(StringUtils::equalTo("This is a test", "This is a TeSt", false));
+        $this->assertFalse(StringUtils::equalTo("This is a test", "This is a TeSt", true));
+        $this->assertFalse(StringUtils::equalTo("This is a test", "Another longer string", false));
+        $this->assertFalse(StringUtils::equalTo("This is a test", "Another longer string", true));
+    }
+
+    /**
+     * Test the StringUtils::lessThan() method.
+     */
+    public function testLessThan(): void
+    {
+        $stringContent1 = "This is a test";
+        $stringContent2 = "This is a TEST";
+        $numericContent1 = "1.01";
+        $numericContent2 = "1.02";
+
+        $this->assertTrue(StringUtils::lessThan($numericContent1, $numericContent2, false));
+        $this->assertTrue(StringUtils::lessThan($numericContent1, $numericContent2, true));
+        $this->assertFalse(StringUtils::lessThan($stringContent2, $stringContent1, false));
+        $this->assertTrue(StringUtils::lessThan($stringContent2, $stringContent1, true));
+    }
+
+    /**
+     * Test the StringUtils::lessThanEqualTo() method.
+     */
+    public function testLessThanEqualTo(): void
+    {
+        $stringContent1 = "This is a test";
+        $stringContent2 = "This is a TEST";
+        $numericContent1 = "1.01";
+        $numericContent2 = "1.02";
+
+        $this->assertTrue(StringUtils::lessThanEqualTo($numericContent1, $numericContent2, false));
+        $this->assertTrue(StringUtils::lessThanEqualTo($numericContent1, $numericContent1, false));
+        $this->assertTrue(StringUtils::lessThanEqualTo($numericContent1, $numericContent2, true));
+        $this->assertTrue(StringUtils::lessThanEqualTo($numericContent1, $numericContent1, true));
+        $this->assertTrue(StringUtils::lessThanEqualTo($stringContent2, $stringContent1, false));
+        $this->assertTrue(StringUtils::lessThanEqualTo($stringContent2, $stringContent1, true));
+    }
+
+    /**
+     * Test the StringUtils::greaterThan() method.
+     */
+    public function testGreaterThan(): void
+    {
+        $stringContent1 = "This is a test";
+        $stringContent2 = "This is a TEST";
+        $numericContent1 = "1.01";
+        $numericContent2 = "1.02";
+
+        $this->assertTrue(StringUtils::greaterThan($numericContent2, $numericContent1, false));
+        $this->assertTrue(StringUtils::greaterThan($numericContent2, $numericContent1, true));
+        $this->assertFalse(StringUtils::greaterThan($stringContent1, $stringContent2, false));
+        $this->assertTrue(StringUtils::greaterThan($stringContent1, $stringContent2, true));
+    }
+
+    /**
+     * Test the StringUtils::greaterThanEqualTo() method.
+     */
+    public function testGreaterThanEqualTo(): void
+    {
+        $stringContent1 = "This is a test";
+        $stringContent2 = "This is a TEST";
+        $numericContent1 = "1.01";
+        $numericContent2 = "1.02";
+
+        $this->assertTrue(StringUtils::greaterThanEqualTo($numericContent2, $numericContent1, false));
+        $this->assertTrue(StringUtils::greaterThanEqualTo($numericContent1, $numericContent1, false));
+        $this->assertTrue(StringUtils::greaterThanEqualTo($numericContent2, $numericContent1, true));
+        $this->assertTrue(StringUtils::greaterThanEqualTo($numericContent1, $numericContent1, true));
+        $this->assertTrue(StringUtils::greaterThanEqualTo($stringContent1, $stringContent2, false));
+        $this->assertTrue(StringUtils::greaterThanEqualTo($stringContent1, $stringContent2, true));
+    }
+
+    /**
+     * Test the StringUtils::greaterThan() method.
+     */
+    public function testDifferentThan(): void
+    {
+        $stringContent1 = "This is a test";
+        $stringContent2 = "This is a TEST";
+        $stringContent3 = "Different string";
+        $numericContent1 = "1.01";
+        $numericContent2 = "1.02";
+
+        $this->assertTrue(StringUtils::differentThan($stringContent1, $stringContent3, true));
+        $this->assertTrue(StringUtils::differentThan($stringContent1, $stringContent3, false));
+        $this->assertTrue(StringUtils::differentThan($numericContent1, $numericContent2, true));
+        $this->assertTrue(StringUtils::differentThan($numericContent1, $numericContent2, false));
+        $this->assertTrue(StringUtils::differentThan($stringContent1, $stringContent2, true));
+        $this->assertFalse(StringUtils::differentThan($stringContent1, $stringContent2, false));
+    }
+
+    /**
      * Test the StringUtils::startsWith() method.
      */
     public function testStartsWith(): void
