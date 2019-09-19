@@ -45,6 +45,20 @@ class StringUtilsTest extends BaseTest
     }
 
     /**
+     * Test the StringUtils::startsWith() method with additional check on upper or lower cases.
+     */
+    public function testStartsWithCaseCheck(): void
+    {
+        $this->assertTrue(StringUtils::startsWith("This is a test", "This is", false));
+        $this->assertTrue(StringUtils::startsWith("This is a test", "this is", false));
+        $this->assertTrue(StringUtils::startsWith("This is a test", "ThiS Is", false));
+        $this->assertTrue(StringUtils::startsWith("This is a test", "This is", true));
+        $this->assertFalse(StringUtils::startsWith("This is a test", "this is", true));
+        $this->assertFalse(StringUtils::startsWith("This is a test", "ThiS Is", true));
+        $this->assertFalse(StringUtils::startsWith("This is a test", "Another string", true));
+    }
+
+    /**
      * Test the StringUtils::endsWith() method.
      */
     public function testEndsWith(): void
@@ -53,6 +67,20 @@ class StringUtilsTest extends BaseTest
         $this->assertTrue(StringUtils::endsWith("This is a test", "test"));
         $this->assertFalse(StringUtils::endsWith("This is a test", "Another string"));
         $this->assertFalse(StringUtils::endsWith("This is a test", "Another longer string"));
+    }
+
+    /**
+     * Test the StringUtils::endsWith() method with additional check on upper or lower cases.
+     */
+    public function testEndsWithCaseCheck(): void
+    {
+        $this->assertTrue(StringUtils::endsWith("This is a test", "", false));
+        $this->assertTrue(StringUtils::endsWith("This is a test", "", true));
+        $this->assertTrue(StringUtils::endsWith("This is a test", "test", false));
+        $this->assertTrue(StringUtils::endsWith("This is a test", "TeSt", false));
+        $this->assertFalse(StringUtils::endsWith("This is a test", "TeSt", true));
+        $this->assertFalse(StringUtils::endsWith("This is a test", "Another string", false));
+        $this->assertFalse(StringUtils::endsWith("This is a test", "Another string", true));
     }
 
     /**

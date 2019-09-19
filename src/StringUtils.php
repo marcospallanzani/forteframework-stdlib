@@ -16,14 +16,20 @@ class StringUtils
      *
      * @param string $check The string to be checked.
      * @param string $startsWith The expected starts-with string.
+     * @param bool $caseSensitive Whether the check should be case sensitive or not.
      *
      * @return bool True if the given check string starts with the given
      * search string; false otherwise.
      */
-    public static function startsWith(string $check, string $startsWith): bool
+    public static function startsWith(string $check, string $startsWith, bool $caseSensitive = false): bool
     {
         $length = strlen($startsWith);
-        return (substr($check, 0, $length) === $startsWith);
+        $subString = substr($check, 0, $length);
+        if ($caseSensitive) {
+            return strcmp($subString, $startsWith) === 0;
+        } else {
+            return strcasecmp($subString, $startsWith) === 0;
+        }
     }
 
     /**
@@ -31,17 +37,23 @@ class StringUtils
      *
      * @param string $check The string to be checked.
      * @param string $endsWith The expected ends-with string.
+     * @param bool $caseSensitive Whether the check should be case sensitive or not.
      *
      * @return bool True if the given check string ends with the given
      * search string; false otherwise.
      */
-    public static function endsWith(string $check, string $endsWith): bool
+    public static function endsWith(string $check, string $endsWith, bool $caseSensitive = false): bool
     {
         $length = strlen($endsWith);
         if ($length == 0) {
             return true;
         }
-        return (substr($check, -$length) === $endsWith);
+        $subString = substr($check, -$length);
+        if ($caseSensitive) {
+            return strcmp($subString, $endsWith) === 0;
+        } else {
+            return strcasecmp($subString, $endsWith) === 0;
+        }
     }
 
     /**
