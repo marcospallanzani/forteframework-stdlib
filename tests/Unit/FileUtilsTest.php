@@ -186,6 +186,33 @@ class FileUtilsTest extends BaseTest
     }
 
     /**
+     * Test function FileUtils::getContentTypeByFileExtension().
+     *
+     * @throws GeneralException
+     */
+    public function testContentTypes(): void
+    {
+        $this->assertEquals(FileUtils::CONTENT_TYPE_INI, FileUtils::getContentTypeByFileExtension('ini'));
+        $this->assertEquals(FileUtils::CONTENT_TYPE_JSON, FileUtils::getContentTypeByFileExtension('json'));
+        $this->assertEquals(FileUtils::CONTENT_TYPE_ARRAY, FileUtils::getContentTypeByFileExtension('php'));
+        $this->assertEquals(FileUtils::CONTENT_TYPE_YAML, FileUtils::getContentTypeByFileExtension('yml'));
+        $this->assertEquals(FileUtils::CONTENT_TYPE_XML, FileUtils::getContentTypeByFileExtension('xml'));
+        $this->assertEquals(FileUtils::CONTENT_TYPE_ENV, FileUtils::getContentTypeByFileExtension(''));
+    }
+
+    /**
+     * Test function FileUtils::getContentTypeByFileExtension() with a wrong file extension.
+     *
+     * @throws GeneralException
+     */
+    public function testContentTypesWrongExtension(): void
+    {
+        $this->expectException(GeneralException::class);
+        $this->expectExceptionMessage("File extension not supported.");
+        $this->assertEquals('', FileUtils::getContentTypeByFileExtension('wrong_extension'));
+    }
+
+    /**
      * Test function FileUtils::exportArrayReportToFile().
      *
      * @dataProvider exportFileProvider

@@ -184,6 +184,35 @@ class FileUtils
     }
 
     /**
+     * Return a file content type for the given file extension.
+     *
+     * @param string $extension The file extension.
+     *
+     * @return string The file content type for the given file extension.
+     *
+     * @throws GeneralException Content type not supported.
+     */
+    public static function getContentTypeByFileExtension(string $extension): string
+    {
+        switch ($extension) {
+            case "ini":
+                return self::CONTENT_TYPE_INI;
+            case "yml":
+                return self::CONTENT_TYPE_YAML;
+            case "json":
+                return self::CONTENT_TYPE_JSON;
+            case "xml":
+                return self::CONTENT_TYPE_XML;
+            case "php":
+                return self::CONTENT_TYPE_ARRAY;
+            case "":
+                return self::CONTENT_TYPE_ENV;
+            default:
+                throw new GeneralException("File extension not supported.");
+        }
+    }
+
+    /**
      * Append to the given file name the extension for the specified content type.
      *
      * @param string $fileName The initial file name.
