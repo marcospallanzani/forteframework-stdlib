@@ -236,4 +236,17 @@ class StringUtilsTest extends BaseTest
         $this->assertStringStartsWith($prefix, $randomId);
         $this->assertEquals(strlen($prefix) + 64, strlen($randomId));
     }
+
+    /**
+     * Test function StringUtils::rightTrim().
+     */
+    public function testRightTrim(): void
+    {
+        $this->assertEquals("test", StringUtils::rightTrim("test\\", "\\"));
+        $this->assertEquals("test", StringUtils::rightTrim("test\\\\", "\\"));
+        $this->assertEquals("test", StringUtils::rightTrim("test\\\\\\", "\\"));
+        $this->assertEquals("test\\middle\\slashes", StringUtils::rightTrim("test\\middle\\slashes\\\\\\", "\\"));
+        $this->assertEquals("test\\middle\\", StringUtils::rightTrim("test\\middle\\slashes", "slashes"));
+        $this->assertEquals("test\\", StringUtils::rightTrim("test\\middle\\slashes", "middle\\slashes"));
+    }
 }

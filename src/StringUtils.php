@@ -243,4 +243,31 @@ class StringUtils
             sha1(rand()) . "_" .
             number_format(microtime(true), 12, '', '');
     }
+
+    /**
+     * Strip all occurrences of the given string from the end of a string.
+     *
+     * @param string $str The input string.
+     * @param string $remove String to remove.
+     *
+     * @return string The modified string.
+     */
+    public static function rightTrim($str, $remove = null)
+    {
+        $str = (string) $str;
+        $remove = (string) $remove;
+
+        if(empty($remove)) {
+            return rtrim($str);
+        }
+
+        $len = strlen($remove);
+        $offset = strlen($str)-$len;
+        while($offset > 0 && $offset == strpos($str, $remove, $offset)) {
+            $str = substr($str, 0, $offset);
+            $offset = strlen($str)-$len;
+        }
+
+        return rtrim($str);
+    }
 }
