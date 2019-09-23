@@ -249,4 +249,16 @@ class StringUtilsTest extends BaseTest
         $this->assertEquals("test\\middle\\", StringUtils::rightTrim("test\\middle\\slashes", "slashes"));
         $this->assertEquals("test\\", StringUtils::rightTrim("test\\middle\\slashes", "middle\\slashes"));
     }
+
+    /**
+     * Test function StringUtils::getNormalizedString().
+     */
+    public function testGetNormalizedString(): void
+    {
+        $this->assertEquals("my app built with forte framework", StringUtils::getNormalizedString("MyApp built_with forte-framework"));
+        $this->assertEquals("my-app-built-with-forte-framework", StringUtils::getNormalizedString("MyApp built_with forte-framework", "-"));
+        $this->assertEquals("my_app_built_with_forte_framework", StringUtils::getNormalizedString("MyApp built_with forte-framework", "_"));
+        $this->assertEquals("my::app::built::with::forte::framework", StringUtils::getNormalizedString("MyAppBuiltWithForte-framework", "::"));
+        $this->assertEquals("my app built with forte framework", StringUtils::getNormalizedString("MyAppBuiltWithForteFramework"));
+    }
 }

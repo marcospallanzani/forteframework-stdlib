@@ -2,6 +2,9 @@
 
 namespace Forte\Stdlib;
 
+use Zend\Filter\StringToLower;
+use Zend\Filter\Word;
+
 /**
  * Class StringUtils.
  *
@@ -269,5 +272,54 @@ class StringUtils
         }
 
         return rtrim($str);
+    }
+
+    /**
+     * Normalize the given value. The following changes are applied:
+     * - convert all camel cases to a chain of words separated by empty spaces (" ");
+     * - convert all dashes ("-") to empty spaces (" ");
+     * - convert all underscores ("_") to empty spaces (" ");
+     * - convert all upper cases to lower cases;
+     * - if a separator is specified, converts all spaces to the given separator (action applied at the end).
+     *
+     * e.g. "MyApp built_with forte-framework" -> "my app built with forte framework" (no separator specified).
+     * e.g. "MyApp built_with forte-framework" -> "my-app-built-with-forte-framework" (separator = "-").
+     * e.g. "MyApp built_with forte-framework" -> "my_app_built_with_forte_framework" (separator = "_").
+     *
+     * @param string $value The value to be normalized.
+     * @param string $separator The desired final separator, if specified.
+     *
+     * @return string A normalized string representation of the given string value.
+     */
+    public static function getNormalizedString(string $value, string $separator = ""): string
+    {
+        if ($value) {
+            /**
+             * We first convert camel cases to spaces.
+             * e.g. "MyForteAPI Test_under Test-dashes" -> "My Forte API Test Test_under Test-dashes"
+             */
+            $normalizedValue = (new Word\CamelCaseToSeparator())->filter($value);
+            /**
+             * We convert dashes to empty spaces
+             * e.g. "My Forte API Test Test_under Test-dashes" -> "My Forte API Test Test_under Test dashes"
+             */
+            $normalizedValue = (new Word\DashToSeparator())->filter($normalizedValue);
+            /**
+             * We convert underscores to empty spaces.
+             * e.g. "My Forte API Test Test_under Test dashes" -> "My Forte API Test Test under Test dashes"
+             */
+            $normalizedValue = (new Word\UnderscoreToSeparator())->filter($normalizedValue);
+
+            if ($separator) {
+                /**
+                 * Now we are sure that we have a non-camel string without dashes or underscores:
+                 * we can replace all the spaces with the given desired separator.
+                 */
+                $normalizedValue = (new Word\SeparatorToSeparator(' ', $separator))->filter($normalizedValue);
+            }
+
+            return (new StringToLower())->filter($normalizedValue);
+        }
+        return "";
     }
 }
