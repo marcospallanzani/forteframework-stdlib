@@ -243,11 +243,29 @@ class StringUtilsTest extends BaseTest
     public function testRightTrim(): void
     {
         $this->assertEquals("test", StringUtils::rightTrim("test\\", "\\"));
+        $this->assertEquals("\\test", StringUtils::rightTrim("\\test\\", "\\"));
         $this->assertEquals("test", StringUtils::rightTrim("test\\\\", "\\"));
         $this->assertEquals("test", StringUtils::rightTrim("test\\\\\\", "\\"));
+        $this->assertEquals("\\\\test", StringUtils::rightTrim("\\\\test\\\\\\", "\\"));
         $this->assertEquals("test\\middle\\slashes", StringUtils::rightTrim("test\\middle\\slashes\\\\\\", "\\"));
         $this->assertEquals("test\\middle\\", StringUtils::rightTrim("test\\middle\\slashes", "slashes"));
         $this->assertEquals("test\\", StringUtils::rightTrim("test\\middle\\slashes", "middle\\slashes"));
+    }
+
+    /**
+     * Test function StringUtils::leftTrim().
+     */
+    public function testLeftTrim(): void
+    {
+        $this->assertEquals("test", StringUtils::leftTrim("\\test", "\\"));
+        $this->assertEquals("test\\", StringUtils::leftTrim("\\test\\", "\\"));
+        $this->assertEquals("test", StringUtils::leftTrim("\\\\test", "\\"));
+        $this->assertEquals("test\\\\\\", StringUtils::leftTrim("test\\\\\\", "\\"));
+        $this->assertEquals("test\\\\\\", StringUtils::leftTrim("\\\\\\test\\\\\\", "\\"));
+        $this->assertEquals("test\\\\\\", StringUtils::leftTrim("\\\\test\\\\\\", "\\"));
+        $this->assertEquals("test\\middle\\slashes", StringUtils::leftTrim("\\\\\\test\\middle\\slashes", "\\"));
+        $this->assertEquals("\\middle\\slashes", StringUtils::leftTrim("test\\middle\\slashes", "test"));
+        $this->assertEquals("\\slashes", StringUtils::leftTrim("test\\middle\\slashes", "test\\middle"));
     }
 
     /**

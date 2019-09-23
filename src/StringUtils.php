@@ -250,28 +250,49 @@ class StringUtils
     /**
      * Strip all occurrences of the given string from the end of a string.
      *
-     * @param string $str The input string.
-     * @param string $remove String to remove.
+     * @param string $string The input string.
+     * @param mixed $remove String to remove.
      *
      * @return string The modified string.
      */
-    public static function rightTrim($str, $remove = null)
+    public static function rightTrim(string $string, $remove = null)
     {
-        $str = (string) $str;
         $remove = (string) $remove;
-
         if(empty($remove)) {
-            return rtrim($str);
+            return rtrim($string);
         }
 
-        $len = strlen($remove);
-        $offset = strlen($str)-$len;
-        while($offset > 0 && $offset == strpos($str, $remove, $offset)) {
-            $str = substr($str, 0, $offset);
-            $offset = strlen($str)-$len;
+        $length = strlen($remove);
+        $offset = strlen($string) - $length;
+        while($offset > 0 && $offset == strpos($string, $remove, $offset)) {
+            $string = substr($string, 0, $offset);
+            $offset = strlen($string) - $length;
         }
 
-        return rtrim($str);
+        return rtrim($string);
+    }
+
+    /**
+     * Strip all occurrences of the given string from the beginning of a string.
+     *
+     * @param string $string The input string.
+     * @param mixed $remove String to remove.
+     *
+     * @return string The modified string.
+     */
+    public static function leftTrim(string $string, $remove = null)
+    {
+        $remove = (string) $remove;
+        if(empty($remove)) {
+            return rtrim($string);
+        }
+
+        $length = strlen($remove);
+        while(strpos($string, $remove, 0) === 0) {
+            $string = substr($string, $length, strlen($string));
+        }
+
+        return rtrim($string);
     }
 
     /**
