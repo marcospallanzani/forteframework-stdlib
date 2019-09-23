@@ -269,6 +269,23 @@ class StringUtilsTest extends BaseTest
     }
 
     /**
+     * Test function StringUtils::trim().
+     */
+    public function testTrim(): void
+    {
+        $this->assertEquals("test", StringUtils::trim("\\test", "\\"));
+        $this->assertEquals("test", StringUtils::trim("\\test\\", "\\"));
+        $this->assertEquals("test", StringUtils::trim("\\\\test", "\\"));
+        $this->assertEquals("test", StringUtils::trim("test\\\\\\", "\\"));
+        $this->assertEquals("test", StringUtils::trim("\\\\\\test\\\\\\", "\\"));
+        $this->assertEquals("test", StringUtils::trim("\\\\test\\\\\\", "\\"));
+        $this->assertEquals("test\\middle\\slashes", StringUtils::trim("\\\\\\test\\middle\\slashes", "\\"));
+        $this->assertEquals("test\\middle\\slashes", StringUtils::trim("\\\\\\test\\middle\\slashes\\\\\\", "\\"));
+        $this->assertEquals("\\middle\\slashes", StringUtils::trim("test\\middle\\slashes", "test"));
+        $this->assertEquals("\\middle\\slashes\\", StringUtils::trim("test\\middle\\slashes\\test", "test"));
+    }
+
+    /**
      * Test function StringUtils::getNormalizedString().
      */
     public function testGetNormalizedString(): void

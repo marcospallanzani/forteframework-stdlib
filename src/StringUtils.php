@@ -280,7 +280,7 @@ class StringUtils
      *
      * @return string The modified string.
      */
-    public static function leftTrim(string $string, $remove = null)
+    public static function leftTrim(string $string, $remove = null): string
     {
         $remove = (string) $remove;
         if(empty($remove)) {
@@ -293,6 +293,22 @@ class StringUtils
         }
 
         return rtrim($string);
+    }
+
+    /**
+     * Strip all occurrences of the given string from the beginning and the end of a string.
+     *
+     * @param string $string The input string.
+     * @param mixed $remove String to remove.
+     *
+     * @return string The modified string.
+     */
+    public static function trim(string $string, $remove = null): string
+    {
+        return self::rightTrim(
+            self::leftTrim($string, $remove),
+            $remove
+        );
     }
 
     /**
