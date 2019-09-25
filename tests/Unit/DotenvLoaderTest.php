@@ -72,5 +72,6 @@ class DotenvLoaderTest extends BaseTest
     public function testGetLineFromVariables(): void
     {
         $this->assertEquals("key=value", DotenvLoader::getLineFromVariables('key', 'value'));
+        $this->assertEquals('key="value with spaces"', DotenvLoader::getLineFromVariables('key', 'value with spaces'));
     }
 }

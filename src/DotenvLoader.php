@@ -52,6 +52,11 @@ class DotenvLoader
      */
     public static function getLineFromVariables(string $key, string $value): string
     {
+        // We need to add double quotes to the value, if it contains spaces
+        if (strpos($value, ' ') !== false) {
+            $value = '"' . $value . '"';
+        }
+
         return "$key=$value";
     }
 
