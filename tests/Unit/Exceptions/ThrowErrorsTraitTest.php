@@ -13,6 +13,7 @@ namespace Forte\Stdlib\Tests\Unit\Exceptions;
 
 use Forte\Stdlib\Exceptions\GeneralException;
 use Forte\Stdlib\Exceptions\MissingKeyException;
+use Forte\Stdlib\Exceptions\WrongParameterException;
 use Forte\Stdlib\Tests\Unit\BaseTest;
 
 /**
@@ -89,4 +90,39 @@ class ThrowErrorsTraitTest extends BaseTest
             $missingKeyException->toArray()
         );
     }
+
+
+    /**
+     * Test ThrowErrorsTrait::throwWrongParameterException() method.
+     *
+     * @throws WrongParameterException
+     */
+    public function testThrowWrongParameterException(): void
+    {
+        $this->expectException(WrongParameterException::class);
+        $this->expectExceptionMessage("error message test.");
+        $this->getAnonymousClass()->throwWrongParameterException(self::BASE_TEST_MESSAGE, "test");
+    }
+
+    /**
+     * Test ThrowErrorsTrait::getWrongParameterException() method.
+     */
+    public function testGetWrongParameterException(): void
+    {
+        $anonymousActionClass = $this->getAnonymousClass();
+        $wrongParameterException = $anonymousActionClass->getWrongParameterException(
+            self::BASE_TEST_MESSAGE,
+            'test'
+        );
+        $this->assertInstanceOf(WrongParameterException::class, $wrongParameterException);
+        $this->assertEquals('error message test.', $wrongParameterException->getMessage());
+        $this->assertEquals(
+            [
+                'error_message' => 'error message test.',
+                'error_code'    => 0
+            ],
+            $wrongParameterException->toArray()
+        );
+    }
+
 }
