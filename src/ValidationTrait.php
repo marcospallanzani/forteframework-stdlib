@@ -30,7 +30,7 @@ trait ValidationTrait
     {
         if (!in_array($parameter, $acceptedParameters)) {
             throw new WrongParameterException(sprintf(
-                "Unsupported %s with value %s. Supported visibilities [%s].",
+                "Unsupported %s with value [%s]. Supported visibilities [%s].",
                 $parameterMessage,
                 $parameter,
                 implode(', ', $acceptedParameters)
