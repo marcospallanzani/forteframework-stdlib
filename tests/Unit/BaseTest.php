@@ -6,6 +6,7 @@ use Forte\Stdlib\ArrayableInterface;
 use Forte\Stdlib\ClassAccessTrait;
 use Forte\Stdlib\Exceptions\ThrowErrorsTrait;
 use Forte\Stdlib\FileUtils;
+use Forte\Stdlib\ValidationTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -70,7 +71,7 @@ abstract class BaseTest extends TestCase
     protected function getAnonymousClass(): ArrayableInterface
     {
         return new class() implements ArrayableInterface {
-            use ThrowErrorsTrait, ClassAccessTrait;
+            use ThrowErrorsTrait, ClassAccessTrait, ValidationTrait;
 
             protected $objects = [];
 
