@@ -15,16 +15,37 @@ trait ValidationTrait
      * Check if the given parameter is not empty.
      *
      * @param mixed $parameter The parameter value to be validated.
-     * @param string $parameterMessage A short description of the specified parameter.
+     * @param string $parameterName A short description of the specified parameter.
      *
-     * @return bool
+     * @return bool True if the given parameter is not empty (0, false are considered as possible values).
      *
      * @throws WrongParameterException
      */
-    public function validateNonEmptyParameter($parameter, string $parameterMessage): bool
+    public function validateNonEmptyParameter($parameter, string $parameterName): bool
     {
         if (!is_numeric($parameter) && !is_bool($parameter) && !$parameter) {
-            throw new WrongParameterException("Parameter $parameterMessage cannot be empty.");
+            throw new WrongParameterException("Parameter $parameterName cannot be empty.");
+        }
+
+        return true;
+    }
+
+    /**
+     * Check if the given list only has string items.
+     *
+     * @param array $list The list to be checked.
+     * @param string $parameterName The list name (for error message).
+     *
+     * @return bool True if the given list only has string values.
+     *
+     * @throws WrongParameterException If the given list has non-string values.
+     */
+    public function validateStringList(array $list, string $parameterName): bool
+    {
+        foreach ($list as $item) {
+            if (!is_string($item)) {
+                throw new WrongParameterException("List $parameterName should contain only string values.");
+            }
         }
 
         return true;
@@ -35,7 +56,7 @@ trait ValidationTrait
      *
      * @param mixed $parameter The parameter value to be validated.
      * @param array $acceptedParameters The accepted parameter values list.
-     * @param string $parameterMessage A short description of the specified parameter.
+     * @param string $parameterName A short description of the specified parameter.
      *
      * @return bool
      *
@@ -44,13 +65,13 @@ trait ValidationTrait
     public function validateParameterInAcceptedList(
         $parameter,
         array $acceptedParameters,
-        string $parameterMessage
+        string $parameterName
     ): bool
     {
         if (!in_array($parameter, $acceptedParameters)) {
             throw new WrongParameterException(sprintf(
                 "Unsupported %s with value [%s]. Supported visibilities [%s].",
-                $parameterMessage,
+                $parameterName,
                 $parameter,
                 implode(', ', $acceptedParameters)
             ));

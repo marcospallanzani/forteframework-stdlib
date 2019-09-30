@@ -16,7 +16,7 @@ class ValidationTraitTest extends BaseTest
      */
     public function parametersListProvider(): array
     {
-        // parameter value |  accepted parameters | parameter message | expected result | expected exception | error message
+        // parameter value |  accepted parameters | parameter name | expected result | expected exception | error message
         return [
             ['a real comment', ['value1', 'value', 'a real comment'], 'comment', true, false],
             [10, [10, 'value', 'a real comment'], 'comment', true, false],
@@ -31,7 +31,7 @@ class ValidationTraitTest extends BaseTest
      */
     public function nonEmptyProvider(): array
     {
-        // parameter value |  parameter message | expected result | expected exception | error message
+        // parameter value |  parameter name | expected result | expected exception | error message
         return [
             [10, 'comment', true, false],
             [0, 'comment', true, false],
@@ -44,13 +44,26 @@ class ValidationTraitTest extends BaseTest
     }
 
     /**
+     * @return array
+     */
+    public function stringListProvider(): array
+    {
+        // list |  list name | expected result | expected exception | error message
+        return [
+            [['test', 'test2', 'test3'], 'test-list', true, false],
+            [['test', 0, 'test3'], 'test-list', false, true, 'List test-list should contain only string values.'],
+            [['test', false, 'test3'], 'test-list', false, true, 'List test-list should contain only string values.'],
+        ];
+    }
+
+    /**
      * Tests the ValidationTrait::validateParameterInAcceptedList() method.
      *
      * @dataProvider parametersListProvider
      *
      * @param mixed $parameter
      * @param array $acceptedParameters
-     * @param string $parameterMessage
+     * @param string $parameterName
      * @param bool $expectedResult
      * @param bool $expectedException
      * @param string $errorMessage
@@ -58,7 +71,7 @@ class ValidationTraitTest extends BaseTest
     public function testParametersList(
         $parameter,
         array $acceptedParameters,
-        string $parameterMessage,
+        string $parameterName,
         bool $expectedResult,
         bool $expectedException,
         string $errorMessage = ""
@@ -72,7 +85,38 @@ class ValidationTraitTest extends BaseTest
         $this->assertEquals($expectedResult, $class->validateParameterInAcceptedList(
             $parameter,
             $acceptedParameters,
-            $parameterMessage
+            $parameterName
+        ));
+    }
+
+
+    /**
+     * Tests the ValidationTrait::validateStringList() method.
+     *
+     * @dataProvider stringListProvider
+     *
+     * @param mixed $list
+     * @param string $listName
+     * @param bool $expectedResult
+     * @param bool $expectedException
+     * @param string $errorMessage
+     */
+    public function testStringList(
+        $list,
+        string $listName,
+        bool $expectedResult,
+        bool $expectedException,
+        string $errorMessage = ""
+    ): void
+    {
+        if ($expectedException) {
+            $this->expectException(WrongParameterException::class);
+            $this->expectExceptionMessage($errorMessage);
+        }
+        $class = $this->getAnonymousClass();
+        $this->assertEquals($expectedResult, $class->validateStringList(
+            $list,
+            $listName
         ));
     }
 
@@ -82,14 +126,14 @@ class ValidationTraitTest extends BaseTest
      * @dataProvider nonEmptyProvider
      *
      * @param $parameter
-     * @param string $parameterMessage
+     * @param string $parameterName
      * @param bool $expectedResult
      * @param bool $expectedException
      * @param string $errorMessage
      */
     public function testNonEmptyParameter(
         $parameter,
-        string $parameterMessage,
+        string $parameterName,
         bool $expectedResult,
         bool $expectedException,
         string $errorMessage = ""
@@ -102,7 +146,7 @@ class ValidationTraitTest extends BaseTest
         $class = $this->getAnonymousClass();
         $this->assertEquals($expectedResult, $class->validateNonEmptyParameter(
             $parameter,
-            $parameterMessage
+            $parameterName
         ));
     }
 }
