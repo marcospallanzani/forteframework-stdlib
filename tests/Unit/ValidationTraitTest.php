@@ -2,6 +2,7 @@
 
 namespace Forte\Stdlib\Tests\Unit;
 
+use Forte\Stdlib\Exceptions\GeneralException;
 use Forte\Stdlib\Exceptions\WrongParameterException;
 
 /**
@@ -50,9 +51,24 @@ class ValidationTraitTest extends BaseTest
     {
         // list |  list name | expected result | expected exception | error message
         return [
-            [['test', 'test2', 'test3'], 'test-list', true, false],
-            [['test', 0, 'test3'], 'test-list', false, true, 'List test-list should contain only string values.'],
-            [['test', false, 'test3'], 'test-list', false, true, 'List test-list should contain only string values.'],
+            [['test', 'test2', 'test3'], 'tests', true, false],
+            [['test', 0, 'test3'], 'tests', false, true, 'tests list should contain only string values.'],
+            [['test', false, 'test3'], 'tests', false, true, 'tests list should contain only string values.'],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function objectListProvider(): array
+    {
+        // list |  list name | expected result | expected exception | error message
+        return [
+            [[new GeneralException(), new GeneralException(), new GeneralException()], GeneralException::class, 'exceptions', true, false],
+            [[new WrongParameterException(), new WrongParameterException(), new WrongParameterException()], WrongParameterException::class, 'exceptions', true, false],
+            [[new WrongParameterException(), new WrongParameterException(), new GeneralException()], WrongParameterException::class, 'exceptions', false, true, "exceptions list should contain only ".WrongParameterException::class." instances."],
+            [[new \stdClass(), new WrongParameterException(), new GeneralException()], WrongParameterException::class, 'exceptions', false, true, "exceptions list should contain only ".WrongParameterException::class." instances."],
+            [[1, new WrongParameterException(), new WrongParameterException()], WrongParameterException::class, 'exceptions', false, true, "exceptions list should contain only ".WrongParameterException::class." instances."],
         ];
     }
 
@@ -88,7 +104,6 @@ class ValidationTraitTest extends BaseTest
             $parameterName
         ));
     }
-
 
     /**
      * Tests the ValidationTrait::validateStringList() method.
@@ -146,6 +161,39 @@ class ValidationTraitTest extends BaseTest
         $class = $this->getAnonymousClass();
         $this->assertEquals($expectedResult, $class->validateNonEmptyParameter(
             $parameter,
+            $parameterName
+        ));
+    }
+
+    /**
+     * Tests the ValidationTrait::validateObjectList() method.
+     *
+     * @dataProvider objectListProvider
+     *
+     * @param array $list
+     * @param string $expectedClass
+     * @param string $parameterName
+     * @param bool $expectedResult
+     * @param bool $expectedException
+     * @param string $errorMessage
+     */
+    public function testObjectList(
+        array $list,
+        string $expectedClass,
+        string $parameterName,
+        bool $expectedResult,
+        bool $expectedException,
+        string $errorMessage = ""
+    ): void
+    {
+        if ($expectedException) {
+            $this->expectException(WrongParameterException::class);
+            $this->expectExceptionMessage($errorMessage);
+        }
+        $class = $this->getAnonymousClass();
+        $this->assertEquals($expectedResult, $class->validateObjectList(
+            $list,
+            $expectedClass,
             $parameterName
         ));
     }

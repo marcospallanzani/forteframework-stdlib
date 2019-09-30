@@ -2,6 +2,7 @@
 
 namespace Forte\Stdlib;
 
+use Forte\Stdlib\Exceptions\GeneralException;
 use Forte\Stdlib\Exceptions\WrongParameterException;
 
 /**
@@ -44,7 +45,29 @@ trait ValidationTrait
     {
         foreach ($list as $item) {
             if (!is_string($item)) {
-                throw new WrongParameterException("List $parameterName should contain only string values.");
+                throw new WrongParameterException("$parameterName list should contain only string values.");
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Check if the given list only has class instances of the given type.
+     *
+     * @param array $list The list to be checked.
+     * @param string $expectedClass The expected item class name.
+     * @param string $parameterName The list name (for error message).
+     *
+     * @return bool True if the given list only has class instances of the given type.
+     *
+     * @throws WrongParameterException If the given list has items which are not of the given type.
+     */
+    public function validateObjectList(array $list, string $expectedClass, string $parameterName): bool
+    {
+        foreach ($list as $item) {
+            if (!is_a($item, $expectedClass)) {
+                throw new WrongParameterException("$parameterName list should contain only $expectedClass instances.");
             }
         }
 
