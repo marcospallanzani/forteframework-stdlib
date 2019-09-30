@@ -12,6 +12,25 @@ use Forte\Stdlib\Exceptions\WrongParameterException;
 trait ValidationTrait
 {
     /**
+     * Check if the given parameter is not empty.
+     *
+     * @param mixed $parameter The parameter value to be validated.
+     * @param string $parameterMessage A short description of the specified parameter.
+     *
+     * @return bool
+     *
+     * @throws WrongParameterException
+     */
+    public function validateNonEmptyParameter($parameter, string $parameterMessage): bool
+    {
+        if (!is_numeric($parameter) && !is_bool($parameter) && !$parameter) {
+            throw new WrongParameterException("Parameter $parameterMessage cannot be empty.");
+        }
+
+        return true;
+    }
+
+    /**
      * Check if the given parameter is contained in the passed accepted parameters list.
      *
      * @param mixed $parameter The parameter value to be validated.
