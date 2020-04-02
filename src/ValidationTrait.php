@@ -2,7 +2,6 @@
 
 namespace Forte\Stdlib;
 
-use Forte\Stdlib\Exceptions\GeneralException;
 use Forte\Stdlib\Exceptions\WrongParameterException;
 
 /**
