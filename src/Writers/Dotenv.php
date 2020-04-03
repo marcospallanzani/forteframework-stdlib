@@ -3,7 +3,7 @@
 namespace Forte\Stdlib\Writers;
 
 use Forte\Stdlib\Exceptions\GeneralException;
-use Zend\Config\Writer\AbstractWriter;
+use Laminas\Config\Writer\AbstractWriter;
 
 /**
  * Class Dotenv.

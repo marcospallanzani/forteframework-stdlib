@@ -2,8 +2,8 @@
 
 namespace Forte\Stdlib;
 
-use Zend\Filter\StringToLower;
-use Zend\Filter\Word;
+use Laminas\Filter\StringToLower;
+use Laminas\Filter\Word;
 
 /**
  * Class StringUtils.

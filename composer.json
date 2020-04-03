@@ -1,22 +1,26 @@
 {
     "name": "forteframework/stdlib",
-    "keywords": ["standard library"],
+    "keywords": [
+        "standard library"
+    ],
     "homepage": "https://www.forteframework.com",
     "description": "ForteFramework Standard Library: a set of classes for general purposes.",
     "version": "1.0.0",
     "require": {
         "php": "^7.4",
         "psr/log": ">=1.0.0",
-        "zendframework/zend-filter": "^2.9",
-        "zendframework/zend-validator": "^2.12",
-        "zendframework/zend-config": "^3.3",
+        "laminas/laminas-filter": "^2.9",
+        "laminas/laminas-validator": "^2.12",
+        "laminas/laminas-config": "^3.3",
         "vlucas/phpdotenv": "^3.6",
         "symfony/yaml": "^4.3"
     },
-    "autoload" : {
-      "psr-4" : {
-        "Forte\\Stdlib\\": ["src"]
-      }
+    "autoload": {
+        "psr-4": {
+            "Forte\\Stdlib\\": [
+                "src"
+            ]
+        }
     },
     "autoload-dev": {
         "psr-4": {

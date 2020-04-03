@@ -3,7 +3,7 @@
 namespace Forte\Stdlib\Filters\Files;
 
 use Forte\Stdlib\Exceptions\GeneralException;
-use Zend\Filter\File\Rename;
+use Laminas\Filter\File\Rename;
 
 /**
  * Class Copy. This class copies a source file to a given destination.

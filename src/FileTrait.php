@@ -3,7 +3,7 @@
 namespace Forte\Stdlib;
 
 use Forte\Stdlib\Exceptions\GeneralException;
-use Zend\Validator\File\NotExists;
+use Laminas\Validator\File\NotExists;
 
 /**
  * Trait FileTrait.

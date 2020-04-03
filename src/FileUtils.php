@@ -5,14 +5,14 @@ namespace Forte\Stdlib;
 use Forte\Stdlib\Exceptions\GeneralException;
 use Forte\Stdlib\Writers\Dotenv as DotenvWriter;
 use Symfony\Component\Yaml\Yaml as YamlReader;
-use Zend\Config\Exception\RuntimeException;
-use Zend\Config\Reader\Ini as IniReader;
-use Zend\Config\Reader\Json as JsonReader;
-use Zend\Config\Reader\Xml as XmlReader;
-use Zend\Config\Writer\Ini as IniWriter;
-use Zend\Config\Writer\Json as JsonWriter;
-use Zend\Config\Writer\PhpArray;
-use Zend\Config\Writer\Xml as XmlWriter;
+use Laminas\Config\Exception\RuntimeException;
+use Laminas\Config\Reader\Ini as IniReader;
+use Laminas\Config\Reader\Json as JsonReader;
+use Laminas\Config\Reader\Xml as XmlReader;
+use Laminas\Config\Writer\Ini as IniWriter;
+use Laminas\Config\Writer\Json as JsonWriter;
+use Laminas\Config\Writer\PhpArray;
+use Laminas\Config\Writer\Xml as XmlWriter;
 
 /**
  * Class FileUtils. Utility class for handling various file actions.
