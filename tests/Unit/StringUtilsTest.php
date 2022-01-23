@@ -1,13 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the ForteFramework Standard Library package.
+ *
+ * (c) Marco Spallanzani <forteframework@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Forte\Stdlib\Tests\Unit;
 
 use Forte\Stdlib\StringUtils;
 
 /**
- * Class StringUtilsTest.
- *
  * @package Forte\Stdlib\Tests\Unit
+ * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class StringUtilsTest extends BaseTest
 {
@@ -19,7 +29,7 @@ class StringUtilsTest extends BaseTest
     public function stringifyProvider(): array
     {
         $stdClass = new \stdClass();
-        $stdClass->test1 = "value1";
+        $stdClass->test1 = 'value1';
 
         return [
             [null, 'null'],
@@ -39,12 +49,12 @@ class StringUtilsTest extends BaseTest
      */
     public function testEqualTo(): void
     {
-        $this->assertTrue(StringUtils::equalTo("This is a test", "This is a test", false));
-        $this->assertTrue(StringUtils::equalTo("This is a test", "This is a test", true));
-        $this->assertTrue(StringUtils::equalTo("This is a test", "This is a TeSt", false));
-        $this->assertFalse(StringUtils::equalTo("This is a test", "This is a TeSt", true));
-        $this->assertFalse(StringUtils::equalTo("This is a test", "Another longer string", false));
-        $this->assertFalse(StringUtils::equalTo("This is a test", "Another longer string", true));
+        $this->assertTrue(StringUtils::equalTo('This is a test', 'This is a test', false));
+        $this->assertTrue(StringUtils::equalTo('This is a test', 'This is a test', true));
+        $this->assertTrue(StringUtils::equalTo('This is a test', 'This is a TeSt', false));
+        $this->assertFalse(StringUtils::equalTo('This is a test', 'This is a TeSt', true));
+        $this->assertFalse(StringUtils::equalTo('This is a test', 'Another longer string', false));
+        $this->assertFalse(StringUtils::equalTo('This is a test', 'Another longer string', true));
     }
 
     /**
@@ -52,10 +62,10 @@ class StringUtilsTest extends BaseTest
      */
     public function testLessThan(): void
     {
-        $stringContent1 = "This is a test";
-        $stringContent2 = "This is a TEST";
-        $numericContent1 = "1.01";
-        $numericContent2 = "1.02";
+        $stringContent1 = 'This is a test';
+        $stringContent2 = 'This is a TEST';
+        $numericContent1 = '1.01';
+        $numericContent2 = '1.02';
 
         $this->assertTrue(StringUtils::lessThan($numericContent1, $numericContent2, false));
         $this->assertTrue(StringUtils::lessThan($numericContent1, $numericContent2, true));
@@ -68,10 +78,10 @@ class StringUtilsTest extends BaseTest
      */
     public function testLessThanEqualTo(): void
     {
-        $stringContent1 = "This is a test";
-        $stringContent2 = "This is a TEST";
-        $numericContent1 = "1.01";
-        $numericContent2 = "1.02";
+        $stringContent1 = 'This is a test';
+        $stringContent2 = 'This is a TEST';
+        $numericContent1 = '1.01';
+        $numericContent2 = '1.02';
 
         $this->assertTrue(StringUtils::lessThanEqualTo($numericContent1, $numericContent2, false));
         $this->assertTrue(StringUtils::lessThanEqualTo($numericContent1, $numericContent1, false));
@@ -86,10 +96,10 @@ class StringUtilsTest extends BaseTest
      */
     public function testGreaterThan(): void
     {
-        $stringContent1 = "This is a test";
-        $stringContent2 = "This is a TEST";
-        $numericContent1 = "1.01";
-        $numericContent2 = "1.02";
+        $stringContent1 = 'This is a test';
+        $stringContent2 = 'This is a TEST';
+        $numericContent1 = '1.01';
+        $numericContent2 = '1.02';
 
         $this->assertTrue(StringUtils::greaterThan($numericContent2, $numericContent1, false));
         $this->assertTrue(StringUtils::greaterThan($numericContent2, $numericContent1, true));
@@ -102,10 +112,10 @@ class StringUtilsTest extends BaseTest
      */
     public function testGreaterThanEqualTo(): void
     {
-        $stringContent1 = "This is a test";
-        $stringContent2 = "This is a TEST";
-        $numericContent1 = "1.01";
-        $numericContent2 = "1.02";
+        $stringContent1 = 'This is a test';
+        $stringContent2 = 'This is a TEST';
+        $numericContent1 = '1.01';
+        $numericContent2 = '1.02';
 
         $this->assertTrue(StringUtils::greaterThanEqualTo($numericContent2, $numericContent1, false));
         $this->assertTrue(StringUtils::greaterThanEqualTo($numericContent1, $numericContent1, false));
@@ -120,11 +130,11 @@ class StringUtilsTest extends BaseTest
      */
     public function testDifferentThan(): void
     {
-        $stringContent1 = "This is a test";
-        $stringContent2 = "This is a TEST";
-        $stringContent3 = "Different string";
-        $numericContent1 = "1.01";
-        $numericContent2 = "1.02";
+        $stringContent1 = 'This is a test';
+        $stringContent2 = 'This is a TEST';
+        $stringContent3 = 'Different string';
+        $numericContent1 = '1.01';
+        $numericContent2 = '1.02';
 
         $this->assertTrue(StringUtils::differentThan($stringContent1, $stringContent3, true));
         $this->assertTrue(StringUtils::differentThan($stringContent1, $stringContent3, false));
@@ -139,19 +149,19 @@ class StringUtilsTest extends BaseTest
      */
     public function testContains(): void
     {
-        $stringContent1 = "This is a test";
-        $stringContent2 = "Different string";
+        $stringContent1 = 'This is a test';
+        $stringContent2 = 'Different string';
 
-        $this->assertTrue(StringUtils::contains($stringContent1, "is a", true));
-        $this->assertTrue(StringUtils::contains($stringContent1, "is a", false));
-        $this->assertTrue(StringUtils::contains($stringContent1, "iS A", false));
-        $this->assertTrue(StringUtils::contains($stringContent2, "strin", true));
-        $this->assertTrue(StringUtils::contains($stringContent2, "strin", false));
-        $this->assertTrue(StringUtils::contains($stringContent2, "STRIN", false));
-        $this->assertFalse(StringUtils::contains($stringContent1, "iS A", true));
-        $this->assertFalse(StringUtils::contains($stringContent1, "string", true));
-        $this->assertFalse(StringUtils::contains($stringContent2, "is a", true));
-        $this->assertFalse(StringUtils::contains($stringContent2, "STRIN", true));
+        $this->assertTrue(StringUtils::contains($stringContent1, 'is a', true));
+        $this->assertTrue(StringUtils::contains($stringContent1, 'is a', false));
+        $this->assertTrue(StringUtils::contains($stringContent1, 'iS A', false));
+        $this->assertTrue(StringUtils::contains($stringContent2, 'strin', true));
+        $this->assertTrue(StringUtils::contains($stringContent2, 'strin', false));
+        $this->assertTrue(StringUtils::contains($stringContent2, 'STRIN', false));
+        $this->assertFalse(StringUtils::contains($stringContent1, 'iS A', true));
+        $this->assertFalse(StringUtils::contains($stringContent1, 'string', true));
+        $this->assertFalse(StringUtils::contains($stringContent2, 'is a', true));
+        $this->assertFalse(StringUtils::contains($stringContent2, 'STRIN', true));
     }
 
     /**
@@ -159,9 +169,9 @@ class StringUtilsTest extends BaseTest
      */
     public function testStartsWith(): void
     {
-        $this->assertTrue(StringUtils::startsWith("This is a test", "This is"));
-        $this->assertFalse(StringUtils::startsWith("This is a test", "Another string"));
-        $this->assertFalse(StringUtils::startsWith("This is a test", "Another longer string"));
+        $this->assertTrue(StringUtils::startsWith('This is a test', 'This is'));
+        $this->assertFalse(StringUtils::startsWith('This is a test', 'Another string'));
+        $this->assertFalse(StringUtils::startsWith('This is a test', 'Another longer string'));
     }
 
     /**
@@ -169,13 +179,13 @@ class StringUtilsTest extends BaseTest
      */
     public function testStartsWithCaseCheck(): void
     {
-        $this->assertTrue(StringUtils::startsWith("This is a test", "This is", false));
-        $this->assertTrue(StringUtils::startsWith("This is a test", "this is", false));
-        $this->assertTrue(StringUtils::startsWith("This is a test", "ThiS Is", false));
-        $this->assertTrue(StringUtils::startsWith("This is a test", "This is", true));
-        $this->assertFalse(StringUtils::startsWith("This is a test", "this is", true));
-        $this->assertFalse(StringUtils::startsWith("This is a test", "ThiS Is", true));
-        $this->assertFalse(StringUtils::startsWith("This is a test", "Another string", true));
+        $this->assertTrue(StringUtils::startsWith('This is a test', 'This is', false));
+        $this->assertTrue(StringUtils::startsWith('This is a test', 'this is', false));
+        $this->assertTrue(StringUtils::startsWith('This is a test', 'ThiS Is', false));
+        $this->assertTrue(StringUtils::startsWith('This is a test', 'This is', true));
+        $this->assertFalse(StringUtils::startsWith('This is a test', 'this is', true));
+        $this->assertFalse(StringUtils::startsWith('This is a test', 'ThiS Is', true));
+        $this->assertFalse(StringUtils::startsWith('This is a test', 'Another string', true));
     }
 
     /**
@@ -183,10 +193,10 @@ class StringUtilsTest extends BaseTest
      */
     public function testEndsWith(): void
     {
-        $this->assertTrue(StringUtils::endsWith("This is a test", ""));
-        $this->assertTrue(StringUtils::endsWith("This is a test", "test"));
-        $this->assertFalse(StringUtils::endsWith("This is a test", "Another string"));
-        $this->assertFalse(StringUtils::endsWith("This is a test", "Another longer string"));
+        $this->assertTrue(StringUtils::endsWith('This is a test', ''));
+        $this->assertTrue(StringUtils::endsWith('This is a test', 'test'));
+        $this->assertFalse(StringUtils::endsWith('This is a test', 'Another string'));
+        $this->assertFalse(StringUtils::endsWith('This is a test', 'Another longer string'));
     }
 
     /**
@@ -194,13 +204,13 @@ class StringUtilsTest extends BaseTest
      */
     public function testEndsWithCaseCheck(): void
     {
-        $this->assertTrue(StringUtils::endsWith("This is a test", "", false));
-        $this->assertTrue(StringUtils::endsWith("This is a test", "", true));
-        $this->assertTrue(StringUtils::endsWith("This is a test", "test", false));
-        $this->assertTrue(StringUtils::endsWith("This is a test", "TeSt", false));
-        $this->assertFalse(StringUtils::endsWith("This is a test", "TeSt", true));
-        $this->assertFalse(StringUtils::endsWith("This is a test", "Another string", false));
-        $this->assertFalse(StringUtils::endsWith("This is a test", "Another string", true));
+        $this->assertTrue(StringUtils::endsWith('This is a test', '', false));
+        $this->assertTrue(StringUtils::endsWith('This is a test', '', true));
+        $this->assertTrue(StringUtils::endsWith('This is a test', 'test', false));
+        $this->assertTrue(StringUtils::endsWith('This is a test', 'TeSt', false));
+        $this->assertFalse(StringUtils::endsWith('This is a test', 'TeSt', true));
+        $this->assertFalse(StringUtils::endsWith('This is a test', 'Another string', false));
+        $this->assertFalse(StringUtils::endsWith('This is a test', 'Another string', true));
     }
 
     /**
@@ -208,8 +218,8 @@ class StringUtilsTest extends BaseTest
      *
      * @dataProvider stringifyProvider
      *
-     * @param mixed $variable
-     * @param string $expected
+     * @param mixed $variable The variable to be converted to a string
+     * @param string $expected The expected string
      */
     public function testStringifyVariable($variable, string $expected): void
     {
@@ -221,9 +231,18 @@ class StringUtilsTest extends BaseTest
      */
     public function testFormatMessage(): void
     {
-        $this->assertEquals('test formatted string', StringUtils::getFormattedMessage('test %s %s', 'formatted', 'string'));
-        $this->assertEquals('test formatted 10', StringUtils::getFormattedMessage('test %s %d', 'formatted', 10.01));
-        $this->assertStringStartsWith('test formatted 10.01', StringUtils::getFormattedMessage('test %s %f', 'formatted', 10.01));
+        $this->assertEquals(
+            'test formatted string',
+            StringUtils::getFormattedMessage('test %s %s', 'formatted', 'string')
+        );
+        $this->assertEquals(
+            'test formatted 10',
+            StringUtils::getFormattedMessage('test %s %d', 'formatted', 10.01)
+        );
+        $this->assertStringStartsWith(
+            'test formatted 10.01',
+            StringUtils::getFormattedMessage('test %s %f', 'formatted', 10.01)
+        );
     }
 
     /**
@@ -231,7 +250,7 @@ class StringUtilsTest extends BaseTest
      */
     public function testGetRandomUniqueId(): void
     {
-        $prefix = "TestWithPrefix";
+        $prefix = 'TestWithPrefix';
         $randomId = StringUtils::getRandomUniqueId($prefix);
         $this->assertStringStartsWith($prefix, $randomId);
         $this->assertEquals(strlen($prefix) + 64, strlen($randomId));
@@ -242,14 +261,14 @@ class StringUtilsTest extends BaseTest
      */
     public function testRightTrim(): void
     {
-        $this->assertEquals("test", StringUtils::rightTrim("test\\", "\\"));
-        $this->assertEquals("\\test", StringUtils::rightTrim("\\test\\", "\\"));
-        $this->assertEquals("test", StringUtils::rightTrim("test\\\\", "\\"));
-        $this->assertEquals("test", StringUtils::rightTrim("test\\\\\\", "\\"));
-        $this->assertEquals("\\\\test", StringUtils::rightTrim("\\\\test\\\\\\", "\\"));
-        $this->assertEquals("test\\middle\\slashes", StringUtils::rightTrim("test\\middle\\slashes\\\\\\", "\\"));
-        $this->assertEquals("test\\middle\\", StringUtils::rightTrim("test\\middle\\slashes", "slashes"));
-        $this->assertEquals("test\\", StringUtils::rightTrim("test\\middle\\slashes", "middle\\slashes"));
+        $this->assertEquals('test', StringUtils::rightTrim('test\\', '\\'));
+        $this->assertEquals('\\test', StringUtils::rightTrim('\\test\\', '\\'));
+        $this->assertEquals('test', StringUtils::rightTrim('test\\\\', '\\'));
+        $this->assertEquals('test', StringUtils::rightTrim('test\\\\\\', '\\'));
+        $this->assertEquals('\\\\test', StringUtils::rightTrim('\\\\test\\\\\\', '\\'));
+        $this->assertEquals('test\\middle\\slashes', StringUtils::rightTrim('test\\middle\\slashes\\\\\\', '\\'));
+        $this->assertEquals('test\\middle\\', StringUtils::rightTrim('test\\middle\\slashes', 'slashes'));
+        $this->assertEquals('test\\', StringUtils::rightTrim('test\\middle\\slashes', 'middle\\slashes'));
     }
 
     /**
@@ -257,15 +276,15 @@ class StringUtilsTest extends BaseTest
      */
     public function testLeftTrim(): void
     {
-        $this->assertEquals("test", StringUtils::leftTrim("\\test", "\\"));
-        $this->assertEquals("test\\", StringUtils::leftTrim("\\test\\", "\\"));
-        $this->assertEquals("test", StringUtils::leftTrim("\\\\test", "\\"));
-        $this->assertEquals("test\\\\\\", StringUtils::leftTrim("test\\\\\\", "\\"));
-        $this->assertEquals("test\\\\\\", StringUtils::leftTrim("\\\\\\test\\\\\\", "\\"));
-        $this->assertEquals("test\\\\\\", StringUtils::leftTrim("\\\\test\\\\\\", "\\"));
-        $this->assertEquals("test\\middle\\slashes", StringUtils::leftTrim("\\\\\\test\\middle\\slashes", "\\"));
-        $this->assertEquals("\\middle\\slashes", StringUtils::leftTrim("test\\middle\\slashes", "test"));
-        $this->assertEquals("\\slashes", StringUtils::leftTrim("test\\middle\\slashes", "test\\middle"));
+        $this->assertEquals('test', StringUtils::leftTrim('\\test', '\\'));
+        $this->assertEquals('test\\', StringUtils::leftTrim('\\test\\', '\\'));
+        $this->assertEquals('test', StringUtils::leftTrim('\\\\test', '\\'));
+        $this->assertEquals('test\\\\\\', StringUtils::leftTrim('test\\\\\\', '\\'));
+        $this->assertEquals('test\\\\\\', StringUtils::leftTrim('\\\\\\test\\\\\\', '\\'));
+        $this->assertEquals('test\\\\\\', StringUtils::leftTrim('\\\\test\\\\\\', '\\'));
+        $this->assertEquals('test\\middle\\slashes', StringUtils::leftTrim('\\\\\\test\\middle\\slashes', '\\'));
+        $this->assertEquals('\\middle\\slashes', StringUtils::leftTrim('test\\middle\\slashes', 'test'));
+        $this->assertEquals('\\slashes', StringUtils::leftTrim('test\\middle\\slashes', 'test\\middle'));
     }
 
     /**
@@ -273,16 +292,16 @@ class StringUtilsTest extends BaseTest
      */
     public function testTrim(): void
     {
-        $this->assertEquals("test", StringUtils::trim("\\test", "\\"));
-        $this->assertEquals("test", StringUtils::trim("\\test\\", "\\"));
-        $this->assertEquals("test", StringUtils::trim("\\\\test", "\\"));
-        $this->assertEquals("test", StringUtils::trim("test\\\\\\", "\\"));
-        $this->assertEquals("test", StringUtils::trim("\\\\\\test\\\\\\", "\\"));
-        $this->assertEquals("test", StringUtils::trim("\\\\test\\\\\\", "\\"));
-        $this->assertEquals("test\\middle\\slashes", StringUtils::trim("\\\\\\test\\middle\\slashes", "\\"));
-        $this->assertEquals("test\\middle\\slashes", StringUtils::trim("\\\\\\test\\middle\\slashes\\\\\\", "\\"));
-        $this->assertEquals("\\middle\\slashes", StringUtils::trim("test\\middle\\slashes", "test"));
-        $this->assertEquals("\\middle\\slashes\\", StringUtils::trim("test\\middle\\slashes\\test", "test"));
+        $this->assertEquals('test', StringUtils::trim('\\test', '\\'));
+        $this->assertEquals('test', StringUtils::trim('\\test\\', '\\'));
+        $this->assertEquals('test', StringUtils::trim('\\\\test', '\\'));
+        $this->assertEquals('test', StringUtils::trim('test\\\\\\', '\\'));
+        $this->assertEquals('test', StringUtils::trim('\\\\\\test\\\\\\', '\\'));
+        $this->assertEquals('test', StringUtils::trim('\\\\test\\\\\\', '\\'));
+        $this->assertEquals('test\\middle\\slashes', StringUtils::trim('\\\\\\test\\middle\\slashes', '\\'));
+        $this->assertEquals('test\\middle\\slashes', StringUtils::trim('\\\\\\test\\middle\\slashes\\\\\\', '\\'));
+        $this->assertEquals('\\middle\\slashes', StringUtils::trim('test\\middle\\slashes', 'test'));
+        $this->assertEquals('\\middle\\slashes\\', StringUtils::trim('test\\middle\\slashes\\test', 'test'));
     }
 
     /**
@@ -290,10 +309,25 @@ class StringUtilsTest extends BaseTest
      */
     public function testGetNormalizedString(): void
     {
-        $this->assertEquals("my app built with forte framework", StringUtils::getNormalizedString("MyApp built_with forte-framework"));
-        $this->assertEquals("my-app-built-with-forte-framework", StringUtils::getNormalizedString("MyApp built_with forte-framework", "-"));
-        $this->assertEquals("my_app_built_with_forte_framework", StringUtils::getNormalizedString("MyApp built_with forte-framework", "_"));
-        $this->assertEquals("my::app::built::with::forte::framework", StringUtils::getNormalizedString("MyAppBuiltWithForte-framework", "::"));
-        $this->assertEquals("my app built with forte framework", StringUtils::getNormalizedString("MyAppBuiltWithForteFramework"));
+        $this->assertEquals(
+            'my app built with forte framework',
+            StringUtils::getNormalizedString('MyApp built_with forte-framework')
+        );
+        $this->assertEquals(
+            'my-app-built-with-forte-framework',
+            StringUtils::getNormalizedString('MyApp built_with forte-framework', '-')
+        );
+        $this->assertEquals(
+            'my_app_built_with_forte_framework',
+            StringUtils::getNormalizedString('MyApp built_with forte-framework', '_')
+        );
+        $this->assertEquals(
+            'my::app::built::with::forte::framework',
+            StringUtils::getNormalizedString('MyAppBuiltWithForte-framework', '::')
+        );
+        $this->assertEquals(
+            'my app built with forte framework',
+            StringUtils::getNormalizedString('MyAppBuiltWithForteFramework')
+        );
     }
 }

@@ -1,48 +1,66 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the ForteFramework Standard Library package.
+ *
+ * (c) Marco Spallanzani <forteframework@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Forte\Stdlib\Tests\Unit;
 
 use Forte\Stdlib\ClassAccessTrait;
 
 /**
- * Class ClassAccessTraitTest
- *
  * @package Forte\Stdlib\Tests\Unit
+ * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class ClassAccessTraitTest extends BaseTest
 {
     /**
-     * Returns an anonymous class to test ClassAccessTrait.
+     * Returns an anonymous instance to test the access trait.
      *
      * @return object
      */
     protected function getAnonymousTestClass()
     {
         return new class {
-
             use ClassAccessTrait;
 
-            const TEST_PREFIX_0_0 = 0;
-            const TEST_PREFIX_0_1 = 1;
-            const TEST_PREFIX_0_2 = 2;
-            const TEST_PREFIX_0_3 = 3;
-            const TEST_PREFIX_0_4 = 4;
-            const TEST_PREFIX_1_0 = 5;
-            const TEST_PREFIX_1_1 = 6;
-            const TEST_PREFIX_1_2 = 7;
-            const TEST_PREFIX_1_3 = 8;
-            const TEST_PREFIX_1_4 = 9;
+            public const TEST_PREFIX_0_0 = 0;
+            public const TEST_PREFIX_0_1 = 1;
+            public const TEST_PREFIX_0_2 = 2;
+            public const TEST_PREFIX_0_3 = 3;
+            public const TEST_PREFIX_0_4 = 4;
+            public const TEST_PREFIX_1_0 = 5;
+            public const TEST_PREFIX_1_1 = 6;
+            public const TEST_PREFIX_1_2 = 7;
+            public const TEST_PREFIX_1_3 = 8;
+            public const TEST_PREFIX_1_4 = 9;
 
-            static $TEST_PREFIX_A_0 = 0;
-            static $TEST_PREFIX_A_1 = 1;
-            static $TEST_PREFIX_A_2 = 2;
-            static $TEST_PREFIX_A_3 = 3;
-            static $TEST_PREFIX_A_4 = 4;
-            static $TEST_PREFIX_B_0 = 5;
-            static $TEST_PREFIX_B_1 = 6;
-            static $TEST_PREFIX_B_2 = 7;
-            static $TEST_PREFIX_B_3 = 8;
-            static $TEST_PREFIX_B_4 = 9;
+            public static int $TEST_PREFIX_A_0 = 0;
+
+            public static int $TEST_PREFIX_A_1 = 1;
+
+            public static int $TEST_PREFIX_A_2 = 2;
+
+            public static int $TEST_PREFIX_A_3 = 3;
+
+            public static int $TEST_PREFIX_A_4 = 4;
+
+            public static int $TEST_PREFIX_B_0 = 5;
+
+            public static int $TEST_PREFIX_B_1 = 6;
+
+            public static int $TEST_PREFIX_B_2 = 7;
+
+            public static int $TEST_PREFIX_B_3 = 8;
+
+            public static int $TEST_PREFIX_B_4 = 9;
         };
     }
 
@@ -71,7 +89,7 @@ class ClassAccessTraitTest extends BaseTest
                 10,
                 [
                     'TEST_PREFIX_0_0', 'TEST_PREFIX_0_1', 'TEST_PREFIX_0_2', 'TEST_PREFIX_0_3', 'TEST_PREFIX_0_4',
-                    'TEST_PREFIX_1_0', 'TEST_PREFIX_1_1', 'TEST_PREFIX_1_2', 'TEST_PREFIX_1_3', 'TEST_PREFIX_1_4'
+                    'TEST_PREFIX_1_0', 'TEST_PREFIX_1_1', 'TEST_PREFIX_1_2', 'TEST_PREFIX_1_3', 'TEST_PREFIX_1_4',
                 ],
                 [],
             ],
@@ -81,7 +99,7 @@ class ClassAccessTraitTest extends BaseTest
                 [],
                 [
                     'TEST_PREFIX_0_0', 'TEST_PREFIX_0_1', 'TEST_PREFIX_0_2', 'TEST_PREFIX_0_3', 'TEST_PREFIX_0_4',
-                    'TEST_PREFIX_1_0', 'TEST_PREFIX_1_1', 'TEST_PREFIX_1_2', 'TEST_PREFIX_1_3', 'TEST_PREFIX_1_4'
+                    'TEST_PREFIX_1_0', 'TEST_PREFIX_1_1', 'TEST_PREFIX_1_2', 'TEST_PREFIX_1_3', 'TEST_PREFIX_1_4',
                 ],
             ],
             [
@@ -89,7 +107,7 @@ class ClassAccessTraitTest extends BaseTest
                 10,
                 [
                     'TEST_PREFIX_0_0', 'TEST_PREFIX_0_1', 'TEST_PREFIX_0_2', 'TEST_PREFIX_0_3', 'TEST_PREFIX_0_4',
-                    'TEST_PREFIX_1_0', 'TEST_PREFIX_1_1', 'TEST_PREFIX_1_2', 'TEST_PREFIX_1_3', 'TEST_PREFIX_1_4'
+                    'TEST_PREFIX_1_0', 'TEST_PREFIX_1_1', 'TEST_PREFIX_1_2', 'TEST_PREFIX_1_3', 'TEST_PREFIX_1_4',
                 ],
                 [],
             ],
@@ -98,11 +116,11 @@ class ClassAccessTraitTest extends BaseTest
                 10,
                 [
                     'TEST_PREFIX_0_0', 'TEST_PREFIX_0_1', 'TEST_PREFIX_0_2', 'TEST_PREFIX_0_3', 'TEST_PREFIX_0_4',
-                    'TEST_PREFIX_1_0', 'TEST_PREFIX_1_1', 'TEST_PREFIX_1_2', 'TEST_PREFIX_1_3', 'TEST_PREFIX_1_4'
+                    'TEST_PREFIX_1_0', 'TEST_PREFIX_1_1', 'TEST_PREFIX_1_2', 'TEST_PREFIX_1_3', 'TEST_PREFIX_1_4',
                 ],
                 [
                     'TEST_PREFIX_A_0', 'TEST_PREFIX_A_1', 'TEST_PREFIX_A_2', 'TEST_PREFIX_A_3', 'TEST_PREFIX_A_4',
-                    'TEST_PREFIX_B_0', 'TEST_PREFIX_B_1', 'TEST_PREFIX_B_2', 'TEST_PREFIX_B_3', 'TEST_PREFIX_B_4'
+                    'TEST_PREFIX_B_0', 'TEST_PREFIX_B_1', 'TEST_PREFIX_B_2', 'TEST_PREFIX_B_3', 'TEST_PREFIX_B_4',
                 ],
             ],
         ];
@@ -133,7 +151,7 @@ class ClassAccessTraitTest extends BaseTest
                 10,
                 [
                     'TEST_PREFIX_A_0', 'TEST_PREFIX_A_1', 'TEST_PREFIX_A_2', 'TEST_PREFIX_A_3', 'TEST_PREFIX_A_4',
-                    'TEST_PREFIX_B_0', 'TEST_PREFIX_B_1', 'TEST_PREFIX_B_2', 'TEST_PREFIX_B_3', 'TEST_PREFIX_B_4'
+                    'TEST_PREFIX_B_0', 'TEST_PREFIX_B_1', 'TEST_PREFIX_B_2', 'TEST_PREFIX_B_3', 'TEST_PREFIX_B_4',
                 ],
                 [],
             ],
@@ -143,7 +161,7 @@ class ClassAccessTraitTest extends BaseTest
                 [],
                 [
                     'TEST_PREFIX_A_0', 'TEST_PREFIX_A_1', 'TEST_PREFIX_A_2', 'TEST_PREFIX_A_3', 'TEST_PREFIX_A_4',
-                    'TEST_PREFIX_B_0', 'TEST_PREFIX_B_1', 'TEST_PREFIX_B_2', 'TEST_PREFIX_B_3', 'TEST_PREFIX_B_4'
+                    'TEST_PREFIX_B_0', 'TEST_PREFIX_B_1', 'TEST_PREFIX_B_2', 'TEST_PREFIX_B_3', 'TEST_PREFIX_B_4',
                 ],
             ],
             [
@@ -151,7 +169,7 @@ class ClassAccessTraitTest extends BaseTest
                 10,
                 [
                     'TEST_PREFIX_A_0', 'TEST_PREFIX_A_1', 'TEST_PREFIX_A_2', 'TEST_PREFIX_A_3', 'TEST_PREFIX_A_4',
-                    'TEST_PREFIX_B_0', 'TEST_PREFIX_B_1', 'TEST_PREFIX_B_2', 'TEST_PREFIX_B_3', 'TEST_PREFIX_B_4'
+                    'TEST_PREFIX_B_0', 'TEST_PREFIX_B_1', 'TEST_PREFIX_B_2', 'TEST_PREFIX_B_3', 'TEST_PREFIX_B_4',
                 ],
                 [],
             ],
@@ -160,25 +178,23 @@ class ClassAccessTraitTest extends BaseTest
                 10,
                 [
                     'TEST_PREFIX_A_0', 'TEST_PREFIX_A_1', 'TEST_PREFIX_A_2', 'TEST_PREFIX_A_3', 'TEST_PREFIX_A_4',
-                    'TEST_PREFIX_B_0', 'TEST_PREFIX_B_1', 'TEST_PREFIX_B_2', 'TEST_PREFIX_B_3', 'TEST_PREFIX_B_4'
+                    'TEST_PREFIX_B_0', 'TEST_PREFIX_B_1', 'TEST_PREFIX_B_2', 'TEST_PREFIX_B_3', 'TEST_PREFIX_B_4',
                 ],
                 [
                     'TEST_PREFIX_0_0', 'TEST_PREFIX_0_1', 'TEST_PREFIX_0_2', 'TEST_PREFIX_0_3', 'TEST_PREFIX_0_4',
-                    'TEST_PREFIX_1_0', 'TEST_PREFIX_1_1', 'TEST_PREFIX_1_2', 'TEST_PREFIX_1_3', 'TEST_PREFIX_1_4'
+                    'TEST_PREFIX_1_0', 'TEST_PREFIX_1_1', 'TEST_PREFIX_1_2', 'TEST_PREFIX_1_3', 'TEST_PREFIX_1_4',
                 ],
             ],
         ];
     }
 
     /**
-     * Tests the ClassAccessTrait::getClassConstants() method.
-     *
      * @dataProvider constantsProvider
      *
-     * @param string $prefix
-     * @param int $expectedCount
-     * @param array $expectedConstantsKeys
-     * @param array $nonExpectedConstantsKeys
+     * @param string $prefix The prefix of the expected class constants.
+     * @param int $expectedCount The expected count of class constants with the given prefix.
+     * @param array $expectedConstantsKeys The expected class constants.
+     * @param array $nonExpectedConstantsKeys The non-expected class constants.
      */
     public function testClassConstants(
         string $prefix,
@@ -193,14 +209,12 @@ class ClassAccessTraitTest extends BaseTest
     }
 
     /**
-     * Tests the ClassAccessTrait::getClassStaticProperties() method.
-     *
      * @dataProvider propertiesProvider
      *
-     * @param string $prefix
-     * @param int $expectedCount
-     * @param array $expectedPropertiesKeys
-     * @param array $nonExpectedPropertiesKeys
+     * @param string $prefix The prefix of the expected class static properties.
+     * @param int $expectedCount The expected count of properties with the given prefix.
+     * @param array $expectedPropertiesKeys The expected static properties.
+     * @param array $nonExpectedPropertiesKeys The non-expected static properties.
      */
     public function testClassStaticProperties(
         string $prefix,
@@ -217,10 +231,10 @@ class ClassAccessTraitTest extends BaseTest
     /**
      * Checks if the given entries respect the given conditions (count, expected keys).
      *
-     * @param array $entries
-     * @param int $expectedCount
-     * @param array $expectedKeys
-     * @param array $nonExpectedKeys
+     * @param array $entries The entries to be checked.
+     * @param int $expectedCount The expected count of entries.
+     * @param array $expectedKeys The expected keys in the given entries.
+     * @param array $nonExpectedKeys The non-expected keys in the given entries.
      */
     protected function assertEntries(
         array $entries,

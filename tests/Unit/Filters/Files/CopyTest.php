@@ -1,5 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the ForteFramework Standard Library package.
+ *
+ * (c) Marco Spallanzani <forteframework@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Forte\Stdlib\Tests\Unit\Filters\Files;
 
 use Forte\Stdlib\Exceptions\GeneralException;
@@ -7,19 +18,18 @@ use Forte\Stdlib\Filters\Files\Copy;
 use Forte\Stdlib\Tests\Unit\BaseTest;
 
 /**
- * Class CopyTest.
- *
  * @package Forte\Stdlib\Tests\Unit\Filters\Files
+ * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class CopyTest extends BaseTest
 {
     /**
      * Temporary files constants
      */
-    const TEST_FILE_TMP      = __DIR__ . '/file-tests';
-    const TEST_FILE_TMP_COPY = __DIR__ . '/file-tests_COPY';
-    const TEST_CONTENT       = "ANY CONTENT";
-    const TEST_WRONG_FILE    = "/path/to/non/existent/file.php";
+    public const TEST_FILE_TMP = __DIR__ . '/file-tests';
+    public const TEST_FILE_TMP_COPY = __DIR__ . '/file-tests_COPY';
+    public const TEST_CONTENT = 'ANY CONTENT';
+    public const TEST_WRONG_FILE = '/path/to/non/existent/file.php';
 
     /**
      * This method is called before each test.
@@ -49,7 +59,7 @@ class CopyTest extends BaseTest
     {
         $copyFilter = new Copy([
             'target' => self::TEST_FILE_TMP_COPY,
-            'overwrite' => true
+            'overwrite' => true,
         ]);
         $copyFilter->filter(self::TEST_FILE_TMP);
         $this->assertEquals(self::TEST_CONTENT, file_get_contents(self::TEST_FILE_TMP_COPY));
@@ -64,7 +74,7 @@ class CopyTest extends BaseTest
     {
         $copyFilter = new Copy([
             'target' => self::TEST_FILE_TMP_COPY,
-            'overwrite' => true
+            'overwrite' => true,
         ]);
         $copyFilter->filter(self::TEST_WRONG_FILE);
         $this->assertEquals(false, @file_get_contents(self::TEST_FILE_TMP_COPY));
@@ -79,7 +89,7 @@ class CopyTest extends BaseTest
     {
         $copyFilter = new Copy([
             'target' => self::TEST_FILE_TMP_COPY,
-            'overwrite' => true
+            'overwrite' => true,
         ]);
         $this->assertEquals(null, $copyFilter->filter(null));
     }
@@ -96,7 +106,7 @@ class CopyTest extends BaseTest
             ->once()
             ->andReturn([
                 'target' => self::TEST_FILE_TMP_COPY,
-                'source' => self::TEST_FILE_TMP_COPY
+                'source' => self::TEST_FILE_TMP_COPY,
             ])
             ->shouldReceive('copyFileToDestination')
             ->once()

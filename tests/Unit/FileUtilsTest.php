@@ -1,14 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the ForteFramework Standard Library package.
+ *
+ * (c) Marco Spallanzani <forteframework@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Forte\Stdlib\Tests\Unit;
 
 use Forte\Stdlib\Exceptions\GeneralException;
 use Forte\Stdlib\FileUtils;
 
 /**
- * Class FileUtilsTest.
- *
  * @package Forte\Stdlib\Tests\Unit
+ * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class FileUtilsTest extends BaseTest
 {
@@ -18,14 +28,13 @@ class FileUtilsTest extends BaseTest
     public function tearDown(): void
     {
         parent::tearDown();
-        @unlink(__DIR__ . "/../data/configfiles/simple-config.ini");
-        @unlink(__DIR__ . "/../data/configfiles/simple-config.json");
-        @unlink(__DIR__ . "/../data/configfiles/simple-config.php");
-        @unlink(__DIR__ . "/../data/configfiles/simple-config.xml");
-        @unlink(__DIR__ . "/../data/configfiles/simple-config.yml");
-        @unlink(__DIR__ . "/../data/configfiles/.env.simple-config");
+        @unlink(__DIR__ . '/../data/config/simple-config.ini');
+        @unlink(__DIR__ . '/../data/config/simple-config.json');
+        @unlink(__DIR__ . '/../data/config/simple-config.php');
+        @unlink(__DIR__ . '/../data/config/simple-config.xml');
+        @unlink(__DIR__ . '/../data/config/simple-config.yml');
+        @unlink(__DIR__ . '/../data/config/.env.simple-config');
     }
-
 
     /**
      * Data provider for all file-utils tests.
@@ -40,30 +49,30 @@ class FileUtilsTest extends BaseTest
             "key2$now" => [
                 "key3$now" => "value3$now",
                 "key4$now" => [
-                    "key5$now" => "value5$now"
-                ]
-            ]
+                    "key5$now" => "value5$now",
+                ],
+            ],
         ];
 
         $expectedEnvArray = [
             "key1$now" => "value1$now",
             "key3$now" => "value3$now",
-            "key5$now" => "value5$now"
+            "key5$now" => "value5$now",
         ];
 
         return [
             // file path    |   content type    |   content     |       expect an exception
-            [__DIR__ . "/../data/configfiles/simple-config.ini", FileUtils::CONTENT_TYPE_INI, $expectedArray, false],
-            [__DIR__ . "/../data/configfiles/simple-config.json", FileUtils::CONTENT_TYPE_JSON, $expectedArray, false],
-            [__DIR__ . "/../data/configfiles/simple-config.php", FileUtils::CONTENT_TYPE_ARRAY, $expectedArray, false],
-            [__DIR__ . "/../data/configfiles/simple-config.xml", FileUtils::CONTENT_TYPE_XML, $expectedArray, false],
-            [__DIR__ . "/../data/configfiles/simple-config.yml", FileUtils::CONTENT_TYPE_YAML, $expectedArray, false],
-            [__DIR__ . "/../data/configfiles/.env.simple-config", FileUtils::CONTENT_TYPE_ENV, $expectedEnvArray, false],
-            ["", FileUtils::CONTENT_TYPE_INI, $expectedArray, true],
-            ["", FileUtils::CONTENT_TYPE_JSON, $expectedArray, true],
-            [__DIR__ . "", FileUtils::CONTENT_TYPE_ARRAY, $expectedArray, true],
-            [__DIR__ . "", FileUtils::CONTENT_TYPE_XML, $expectedArray, true],
-            [__DIR__ . "/../data/configfiles/simple-config", 'text', [], false],
+            [__DIR__ . '/../data/config/simple-config.ini', FileUtils::CONTENT_TYPE_INI, $expectedArray, false],
+            [__DIR__ . '/../data/config/simple-config.json', FileUtils::CONTENT_TYPE_JSON, $expectedArray, false],
+            [__DIR__ . '/../data/config/simple-config.php', FileUtils::CONTENT_TYPE_ARRAY, $expectedArray, false],
+            [__DIR__ . '/../data/config/simple-config.xml', FileUtils::CONTENT_TYPE_XML, $expectedArray, false],
+            [__DIR__ . '/../data/config/simple-config.yml', FileUtils::CONTENT_TYPE_YAML, $expectedArray, false],
+            [__DIR__ . '/../data/config/.env.simple-config', FileUtils::CONTENT_TYPE_ENV, $expectedEnvArray, false],
+            ['', FileUtils::CONTENT_TYPE_INI, $expectedArray, true],
+            ['', FileUtils::CONTENT_TYPE_JSON, $expectedArray, true],
+            [__DIR__ . '', FileUtils::CONTENT_TYPE_ARRAY, $expectedArray, true],
+            [__DIR__ . '', FileUtils::CONTENT_TYPE_XML, $expectedArray, true],
+            [__DIR__ . '/../data/config/simple-config', 'text', [], false],
         ];
     }
 
@@ -88,15 +97,15 @@ class FileUtilsTest extends BaseTest
     public function exportFileProvider(): array
     {
         // Content | content type | destination full path | destination path prefix | export dir path | exception expected
-        $testCases = [];
-        $testCases = array_merge($testCases, $this->getExportVariables($this->configFileArray, FileUtils::CONTENT_TYPE_JSON));
-        $testCases = array_merge($testCases, $this->getExportVariables($this->configFileArray, FileUtils::CONTENT_TYPE_YAML));
-        $testCases = array_merge($testCases, $this->getExportVariables($this->configFileArray, FileUtils::CONTENT_TYPE_XML));
-        $testCases = array_merge($testCases, $this->getExportVariables($this->configFileArray, FileUtils::CONTENT_TYPE_ARRAY));
-        $testCases = array_merge($testCases, $this->getExportVariables($this->configFileArray, FileUtils::CONTENT_TYPE_INI));
-        $testCases = array_merge($testCases, $this->getExportVariables($this->configEnvArray, FileUtils::CONTENT_TYPE_ENV));
+        $tests = [];
+        $tests = array_merge($tests, $this->getExportVariables($this->configFileArray, FileUtils::CONTENT_TYPE_JSON));
+        $tests = array_merge($tests, $this->getExportVariables($this->configFileArray, FileUtils::CONTENT_TYPE_YAML));
+        $tests = array_merge($tests, $this->getExportVariables($this->configFileArray, FileUtils::CONTENT_TYPE_XML));
+        $tests = array_merge($tests, $this->getExportVariables($this->configFileArray, FileUtils::CONTENT_TYPE_ARRAY));
+        $tests = array_merge($tests, $this->getExportVariables($this->configFileArray, FileUtils::CONTENT_TYPE_INI));
+        $tests = array_merge($tests, $this->getExportVariables($this->configEnvArray, FileUtils::CONTENT_TYPE_ENV));
 
-        return $testCases;
+        return $tests;
     }
 
     /**
@@ -104,10 +113,10 @@ class FileUtilsTest extends BaseTest
      *
      * @dataProvider fileUtilsProvider
      *
-     * @param string $filePath
-     * @param string $contentType
-     * @param array $content
-     * @param bool $expectException
+     * @param string $filePath The output file path.
+     * @param string $contentType The output file content type.
+     * @param array $content The content to be written to the specified path.
+     * @param bool $expectException Whether an exception is expected.
      *
      * @throws GeneralException
      */
@@ -131,8 +140,8 @@ class FileUtilsTest extends BaseTest
      *
      * @dataProvider emptyFilesProvider
      *
-     * @param string $filePath
-     * @param string $contentType
+     * @param string $filePath The path of the file to be parsed.
+     * @param string $contentType The file content type.
      *
      * @throws GeneralException
      */
@@ -181,7 +190,7 @@ class FileUtilsTest extends BaseTest
     public function testFileExtensionsWrongContentType(): void
     {
         $this->expectException(GeneralException::class);
-        $this->expectExceptionMessage("Content type not supported.");
+        $this->expectExceptionMessage('Content type not supported.');
         $this->assertEquals('', FileUtils::getFileExtensionByContentType('wrong_content_type'));
     }
 
@@ -208,7 +217,7 @@ class FileUtilsTest extends BaseTest
     public function testContentTypesWrongExtension(): void
     {
         $this->expectException(GeneralException::class);
-        $this->expectExceptionMessage("File extension not supported.");
+        $this->expectExceptionMessage('File extension not supported.');
         $this->assertEquals('', FileUtils::getContentTypeByFileExtension('wrong_extension'));
     }
 
@@ -217,13 +226,13 @@ class FileUtilsTest extends BaseTest
      *
      * @dataProvider exportFileProvider
      *
-     * @param array $content
-     * @param string $contentType
-     * @param string $exportFullFilePath
-     * @param string $defaultNamePrefix
-     * @param string $exportDirPath
-     * @param bool $expectedException
-     * @param string $exceptionMessage
+     * @param array $content The content to be exported.
+     * @param string $contentType The content type.
+     * @param string $exportFullFilePath The full path of the export file.
+     * @param string $defaultNamePrefix The default file name prefix to be used.
+     * @param string $exportDirPath The export directory path.
+     * @param bool $expectedException Whether an exception is expected.
+     * @param string $exceptionMessage The expected exception message.
      *
      * @throws GeneralException
      */
@@ -243,20 +252,26 @@ class FileUtilsTest extends BaseTest
         }
 
         // We write the content
-        $writtenFile = FileUtils::exportArrayReportToFile($content, $contentType, $exportFullFilePath, $defaultNamePrefix, $exportDirPath);
+        $writtenFile = FileUtils::exportArrayReportToFile(
+            $content,
+            $contentType,
+            $exportFullFilePath,
+            $defaultNamePrefix,
+            $exportDirPath
+        );
 
         // We check the written content
-        if ($contentType === FileUtils::CONTENT_TYPE_XML) {
+        if (FileUtils::CONTENT_TYPE_XML === $contentType) {
             $content = ['element' => $content];
         }
         $this->assertEquals($content, FileUtils::parseFile($writtenFile, $contentType));
 
         // We check the prefix of the exported file, in case no full export path was provided
-        if (empty($exportFullFilePath)) {
-            if (!empty($defaultNamePrefix)) {
+        if ('' === $exportFullFilePath) {
+            if ('' !== $defaultNamePrefix) {
                 $this->assertStringContainsString($defaultNamePrefix, $writtenFile);
             } else {
-                $this->assertStringContainsString("export_data", $writtenFile);
+                $this->assertStringContainsString('export_data', $writtenFile);
             }
         }
 
@@ -270,23 +285,23 @@ class FileUtilsTest extends BaseTest
      */
     public function testAppendContentTypeExtension(): void
     {
-        $this->assertEquals("test.json", FileUtils::appendContentTypeExtension("test", FileUtils::CONTENT_TYPE_JSON));
-        $this->assertEquals("test.xml", FileUtils::appendContentTypeExtension("test", FileUtils::CONTENT_TYPE_XML));
-        $this->assertEquals("test.yml", FileUtils::appendContentTypeExtension("test", FileUtils::CONTENT_TYPE_YAML));
-        $this->assertEquals("test.ini", FileUtils::appendContentTypeExtension("test", FileUtils::CONTENT_TYPE_INI));
-        $this->assertEquals("test.php", FileUtils::appendContentTypeExtension("test", FileUtils::CONTENT_TYPE_ARRAY));
-        $this->assertEquals("test", FileUtils::appendContentTypeExtension("test", FileUtils::CONTENT_TYPE_ENV));
+        $this->assertEquals('test.json', FileUtils::appendContentTypeExtension('test', FileUtils::CONTENT_TYPE_JSON));
+        $this->assertEquals('test.xml', FileUtils::appendContentTypeExtension('test', FileUtils::CONTENT_TYPE_XML));
+        $this->assertEquals('test.yml', FileUtils::appendContentTypeExtension('test', FileUtils::CONTENT_TYPE_YAML));
+        $this->assertEquals('test.ini', FileUtils::appendContentTypeExtension('test', FileUtils::CONTENT_TYPE_INI));
+        $this->assertEquals('test.php', FileUtils::appendContentTypeExtension('test', FileUtils::CONTENT_TYPE_ARRAY));
+        $this->assertEquals('test', FileUtils::appendContentTypeExtension('test', FileUtils::CONTENT_TYPE_ENV));
 
         $this->expectException(GeneralException::class);
-        $this->expectExceptionMessage("Content type not supported.");
-        FileUtils::appendContentTypeExtension("test", "wrong-content-type");
+        $this->expectExceptionMessage('Content type not supported.');
+        FileUtils::appendContentTypeExtension('test', 'wrong-content-type');
     }
 
     /**
      * Return a list of test cases for the given content and content type.
      *
-     * @param array $content
-     * @param string $contentType
+     * @param array $content An array representation of the content to be exported to a file.
+     * @param string $contentType The output content file type.
      *
      * @return array
      *
@@ -294,17 +309,18 @@ class FileUtilsTest extends BaseTest
      */
     protected function getExportVariables(array $content, string $contentType): array
     {
-        if ($contentType !== FileUtils::CONTENT_TYPE_ENV) {
-            $exportFilePath = "/../data/configfiles/export-to-file." . (FileUtils::getFileExtensionByContentType($contentType));
+        if (FileUtils::CONTENT_TYPE_ENV !== $contentType) {
+            $exportFilePath = '/../data/config/export-to-file.' .
+                FileUtils::getFileExtensionByContentType($contentType);
         } else {
-            $exportFilePath = "/../data/configfiles/.env.export-to-file";
+            $exportFilePath = '/../data/config/.env.export-to-file';
         }
         return [
-            [$content, $contentType, __DIR__ . $exportFilePath, "", "", false, ""],
-            [$content, $contentType, "", "test-prefix-unique", "", false, ""],
-            [$content, $contentType, "", "export_data", "", false, ""],
-            [$content, $contentType, "", "test-prefix-unique", __DIR__ . "/../data", false, ""],
-            [$content, $contentType, __DIR__, "", "", true, "The given destination file path cannot be a directory."],
+            [$content, $contentType, __DIR__ . $exportFilePath, '', '', false, ''],
+            [$content, $contentType, '', 'test-prefix-unique', '', false, ''],
+            [$content, $contentType, '', 'export_data', '', false, ''],
+            [$content, $contentType, '', 'test-prefix-unique', __DIR__ . '/../data', false, ''],
+            [$content, $contentType, __DIR__, '', '', true, 'The given destination file path cannot be a directory.'],
         ];
     }
 }

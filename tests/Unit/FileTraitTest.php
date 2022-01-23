@@ -1,19 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the ForteFramework Standard Library package.
+ *
+ * (c) Marco Spallanzani <forteframework@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Forte\Stdlib\Tests\Unit;
 
 use Forte\Stdlib\Exceptions\GeneralException;
 use Forte\Stdlib\FileTrait;
 
 /**
- * Class FileTraitTest.
- *
  * @package Forte\Stdlib\Tests\Unit
+ * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class FileTraitTest extends BaseTest
 {
     /**
-     * Returns an anonymous class to test ClassAccessTrait.
+     * Returns an anonymous instance that uses the FileTraitTest.
      *
      * @return object
      */
@@ -32,12 +42,12 @@ class FileTraitTest extends BaseTest
     public function filesProvider(): array
     {
         return [
-            [__DIR__ . '/../data/configfiles/parsetest.ini', true, false, false],
-            [__DIR__ . '/../data/configfiles/parsetest.ini', true, true, false],
-            [__DIR__ . '/../data/configfiles/parsetest.json', true, false, false],
-            [__DIR__ . '/../data/configfiles/parsetest.json', true, true, false],
-            [__DIR__ . '/../data/configfiles/parsetest', false, false, false],
-            [__DIR__ . '/../data/configfiles/parsetest', false, true, true],
+            [__DIR__ . '/../data/config/parsetest.ini', true, false, false],
+            [__DIR__ . '/../data/config/parsetest.ini', true, true, false],
+            [__DIR__ . '/../data/config/parsetest.json', true, false, false],
+            [__DIR__ . '/../data/config/parsetest.json', true, true, false],
+            [__DIR__ . '/../data/config/parsetest', false, false, false],
+            [__DIR__ . '/../data/config/parsetest', false, true, true],
         ];
     }
 
@@ -46,10 +56,10 @@ class FileTraitTest extends BaseTest
      *
      * @dataProvider filesProvider
      *
-     * @param string $filePath
-     * @param bool $expected
-     * @param bool $raiseError
-     * @param bool $exceptionExpected
+     * @param string $filePath The file path to be checked.
+     * @param bool $expected Whether the given file path is associated to an existing file.
+     * @param bool $raiseError Whether an error should be raised while checking if the file exists.
+     * @param bool $exceptionExpected Whether an exception is expected.
      */
     public function testFileExists(
         string $filePath,

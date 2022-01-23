@@ -1,14 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the ForteFramework Standard Library package.
+ *
+ * (c) Marco Spallanzani <forteframework@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Forte\Stdlib\Tests\Unit;
 
 use Forte\Stdlib\ArrayUtils;
 use Forte\Stdlib\Exceptions\MissingKeyException;
 
 /**
- * Class ArrayUtilsTest.
- *
  * @package Forte\Stdlib\Tests\Unit
+ * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class ArrayUtilsTest extends BaseTest
 {
@@ -19,18 +29,18 @@ class ArrayUtilsTest extends BaseTest
      */
     protected $testArray = [
         'test1' => [
-            'test2' => 'value2'
+            'test2' => 'value2',
         ],
         'test5' => [
             'test6' => [
                 'test7' => [
                     'test8' => [
                         'test9' => [
-                            'test10' => 'value10'
-                        ]
-                    ]
+                            'test10' => 'value10',
+                        ],
+                    ],
                 ],
-            ]
+            ],
         ],
     ];
 
@@ -42,28 +52,27 @@ class ArrayUtilsTest extends BaseTest
     public function arraysProvider(): array
     {
         $filterArray =  [
-            "FILTER_0" => "FILTER_0_VALUE",
-            "FILTER_1" => "FILTER_1_VALUE",
-            "FILTER_2" => "FILTER_2_VALUE",
+            'FILTER_0' => 'FILTER_0_VALUE',
+            'FILTER_1' => 'FILTER_1_VALUE',
+            'FILTER_2' => 'FILTER_2_VALUE',
         ];
 
         $filterByStringArray =  [
-            "FILTER_BY_STRING_0" => "FILTER_BY_STRING_0_VALUE",
-            "FILTER_BY_STRING_1" => "FILTER_BY_STRING_1_VALUE",
-            "FILTER_BY_STRING_2" => "FILTER_BY_STRING_2_VALUE",
+            'FILTER_BY_STRING_0' => 'FILTER_BY_STRING_0_VALUE',
+            'FILTER_BY_STRING_1' => 'FILTER_BY_STRING_1_VALUE',
+            'FILTER_BY_STRING_2' => 'FILTER_BY_STRING_2_VALUE',
         ];
 
         $fullArray = array_merge($filterArray, $filterByStringArray);
 
         return [
-            [$fullArray, "FILTER", $fullArray],
-            [$fullArray, "FILTER_0", ["FILTER_0" => "FILTER_0_VALUE"]],
-            [$fullArray, "FILTER_BY", $filterByStringArray],
-            [$fullArray, "FILTER_BY_STRING", $filterByStringArray],
-            [$fullArray, "FILTER_BY_STRING_0", ["FILTER_BY_STRING_0" => "FILTER_BY_STRING_0_VALUE"]],
+            [$fullArray, 'FILTER', $fullArray],
+            [$fullArray, 'FILTER_0', ['FILTER_0' => 'FILTER_0_VALUE']],
+            [$fullArray, 'FILTER_BY', $filterByStringArray],
+            [$fullArray, 'FILTER_BY_STRING', $filterByStringArray],
+            [$fullArray, 'FILTER_BY_STRING_0', ['FILTER_BY_STRING_0' => 'FILTER_BY_STRING_0_VALUE']],
         ];
     }
-
 
     /**
      * Data provider for all config access tests.
@@ -88,9 +97,9 @@ class ArrayUtilsTest extends BaseTest
      *
      * @dataProvider arraysProvider
      *
-     * @param array $initialArray
-     * @param string $prefix
-     * @param array $expected
+     * @param array $initialArray The array to be filtered.
+     * @param string $prefix The prefix that filtered keys should have.
+     * @param array $expected The filtered array.
      */
     public function testFilterArrayByPrefixKey(array $initialArray, string $prefix, array $expected): void
     {
@@ -102,7 +111,7 @@ class ArrayUtilsTest extends BaseTest
      */
     public function testVariablesToArray(): void
     {
-        $anonymousClass      = $this->getAnonymousClass();
+        $anonymousClass = $this->getAnonymousClass();
         $childAnonymousClass = $this->getAnonymousClass();
 
         // We build the expected output
@@ -121,10 +130,10 @@ class ArrayUtilsTest extends BaseTest
      *
      * @dataProvider configProvider
      *
-     * @param string $key
-     * @param array $checkContent
-     * @param mixed $expectedValue
-     * @param bool $expectException
+     * @param string $key A dot-separated key to be searched in the given content.
+     * @param array $checkContent The content to be checked.
+     * @param mixed $expectedValue The expected value for the given key.
+     * @param bool $expectException Whether an exception is expected.
      *
      * @throws MissingKeyException
      */

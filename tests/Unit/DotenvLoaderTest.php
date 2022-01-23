@@ -1,14 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the ForteFramework Standard Library package.
+ *
+ * (c) Marco Spallanzani <forteframework@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Forte\Stdlib\Tests\Unit;
 
 use Forte\Stdlib\DotenvLoader;
 use Forte\Stdlib\Exceptions\GeneralException;
 
 /**
- * Class DotenvLoaderTest.
- *
  * @package Forte\Stdlib\Tests\Unit
+ * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class DotenvLoaderTest extends BaseTest
 {
@@ -21,7 +31,7 @@ class DotenvLoaderTest extends BaseTest
     {
         $this->assertEquals(
             $this->configEnvArray,
-            DotenvLoader::loadIntoArray(__DIR__ . "/../data/configfiles/.env.parsetest")
+            DotenvLoader::loadIntoArray(__DIR__ . '/../data/config/.env.parsetest')
         );
     }
 
@@ -44,9 +54,9 @@ class DotenvLoaderTest extends BaseTest
      */
     public function testLoadIntoArrayNonExistentFile(): void
     {
-        $filePath = __DIR__ . "/../data/configfiles/xxx";
+        $filePath = __DIR__ . '/../data/config/xxx';
         $this->expectException(GeneralException::class);
-        $this->expectExceptionMessage("Unable to read the environment file [$filePath].");
+        $this->expectExceptionMessage('Unable to read the environment file [$filePath].');
         DotenvLoader::loadIntoArray($filePath);
     }
 
@@ -57,11 +67,12 @@ class DotenvLoaderTest extends BaseTest
      */
     public function testLoadIntoArrayBadlyFormedFile(): void
     {
-        $filePath = __DIR__ . "/../data/configfiles/.env.wrong";
+
+        $filePath = __DIR__ . '/../data/config/.env.wrong';
         $this->expectException(GeneralException::class);
         $this->expectExceptionMessage(
             "Error occurred while reading the file '$filePath'. Error message is: Failed " .
-            "to parse dotenv file due to an unexpected equals. Failed at [=value3]."
+            'to parse dotenv file due to an unexpected equals. Failed at [=value3].'
         );
         DotenvLoader::loadIntoArray($filePath);
     }
@@ -71,7 +82,7 @@ class DotenvLoaderTest extends BaseTest
      */
     public function testGetLineFromVariables(): void
     {
-        $this->assertEquals("key=value", DotenvLoader::getLineFromVariables('key', 'value'));
+        $this->assertEquals('key=value', DotenvLoader::getLineFromVariables('key', 'value'));
         $this->assertEquals('key="value with spaces"', DotenvLoader::getLineFromVariables('key', 'value with spaces'));
     }
 }

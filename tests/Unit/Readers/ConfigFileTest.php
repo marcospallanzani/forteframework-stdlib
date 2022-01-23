@@ -1,5 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the ForteFramework Standard Library package.
+ *
+ * (c) Marco Spallanzani <forteframework@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Forte\Stdlib\Tests\Unit\Readers;
 
 use Forte\Stdlib\Exceptions\GeneralException;
@@ -9,9 +20,8 @@ use Forte\Stdlib\Readers\ConfigFile;
 use Forte\Stdlib\Tests\Unit\BaseTest;
 
 /**
- * Class ConfigFileTest.
- *
  * @package Forte\Stdlib\Tests\Unit\Readers
+ * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class ConfigFileTest extends BaseTest
 {
@@ -20,8 +30,8 @@ class ConfigFileTest extends BaseTest
      *
      * @dataProvider configFilesProvider
      *
-     * @param string $filePath
-     * @param string $contentType
+     * @param string $filePath The configuration file path.
+     * @param string $contentType The content type of the given configuration file.
      *
      * @throws GeneralException
      */
@@ -36,9 +46,9 @@ class ConfigFileTest extends BaseTest
      *
      * @dataProvider configFilesProvider
      *
-     * @param string $filePath
-     * @param string $contentType
-     * @param array $expectedContent
+     * @param string $filePath The configuration file path.
+     * @param string $contentType The content type of the given configuration file.
+     * @param array $expectedContent The expected content.
      *
      * @throws GeneralException
      */
@@ -56,10 +66,13 @@ class ConfigFileTest extends BaseTest
      *
      * @dataProvider configFilesProvider
      *
-     * @param string $filePath
-     * @param string $contentType
+     * @param string $filePath The configuration file path.
+     * @param string $contentType The content type of the given configuration file.
+     * @param array $expectedContent The expected content.
+     * @param array $existentKeys The keys that should exist in the parsed content.
      *
      * @throws GeneralException
+     * @throws MissingKeyException
      */
     public function testGetValue(
         string $filePath,
@@ -79,11 +92,11 @@ class ConfigFileTest extends BaseTest
      *
      * @dataProvider configFilesProvider
      *
-     * @param string $filePath
-     * @param string $contentType
-     * @param array $expectedContent
-     * @param array $existentKeys
-     * @param array $nonExistentKeys
+     * @param string $filePath The configuration file path.
+     * @param string $contentType The content type of the given configuration file.
+     * @param array $expectedContent The expected content.
+     * @param array $existentKeys The keys that should exist in the parsed content.
+     * @param array $nonExistentKeys The keys that should not exist in the parsed content.
      *
      * @throws GeneralException
      * @throws MissingKeyException
@@ -107,15 +120,11 @@ class ConfigFileTest extends BaseTest
     /**
      * Test function ConfigFile::__construct() with a wrong file.
      *
-     * @dataProvider configFilesProvider
-     *
-     * @param string $filePath
-     *
      * @throws GeneralException
      */
-    public function testContentTypeNotSupported(string $filePath): void
+    public function testContentTypeNotSupported(): void
     {
         $this->expectException(GeneralException::class);
-        new ConfigFile(__DIR__ . "/../data/configfiles/empty_parsetest.json", FileUtils::CONTENT_TYPE_JSON);
+        new ConfigFile(__DIR__ . '/../data/config/empty_parsetest.json', FileUtils::CONTENT_TYPE_JSON);
     }
 }
