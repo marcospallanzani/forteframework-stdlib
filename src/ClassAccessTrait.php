@@ -1,11 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the ForteFramework Standard Library package.
+ *
+ * (c) Marco Spallanzani <forteframework@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Forte\Stdlib;
 
 /**
- * Trait ClassAccessTrait. A trait that identifies class constants.
+ * A trait that identifies class constants.
  *
  * @package Forte\Stdlib
+ * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 trait ClassAccessTrait
 {
@@ -24,14 +36,13 @@ trait ClassAccessTrait
         try {
             $reflectClass = new \ReflectionClass(static::class);
             $constants = $reflectClass->getConstants();
-            if ($prefix !== '') {
+            if ('' !== $prefix) {
                 // Filter constants by the given prefix
                 $constants = ArrayUtils::filterArrayByPrefixKey($constants, $prefix);
             }
             // @codeCoverageIgnoreStart
         } catch (\ReflectionException $reflectionException) {
             // In this case, as we use the static key work, a ReflectionException is never thrown.
-            ;
             // @codeCoverageIgnoreEnd
         }
         return $constants;
@@ -52,14 +63,13 @@ trait ClassAccessTrait
         try {
             $reflectClass = new \ReflectionClass(static::class);
             $properties = $reflectClass->getStaticProperties();
-            if ($prefix !== '') {
+            if ('' !== $prefix) {
                 // Filter constants by the given prefix
                 $properties = ArrayUtils::filterArrayByPrefixKey($properties, $prefix);
             }
             // @codeCoverageIgnoreStart
         } catch (\ReflectionException $reflectionException) {
             // In this case, as we use the static key work, a ReflectionException is never thrown.
-            ;
             // @codeCoverageIgnoreEnd
         }
         return $properties;

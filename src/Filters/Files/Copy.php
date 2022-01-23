@@ -1,14 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the ForteFramework Standard Library package.
+ *
+ * (c) Marco Spallanzani <forteframework@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Forte\Stdlib\Filters\Files;
 
 use Forte\Stdlib\Exceptions\GeneralException;
 use Laminas\Filter\File\Rename;
 
 /**
- * Class Copy. This class copies a source file to a given destination.
+ * This class copies a source file to a given destination.
  *
  * @package Forte\Stdlib\Filters\Files
+ * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class Copy extends Rename
 {
@@ -29,12 +41,11 @@ class Copy extends Rename
         }
 
         $file = $this->getNewName($value, true);
-        if (is_string($file)) {
+        if (true === is_string($file)) {
             return $file;
         }
 
-        $result = $this->copyFileToDestination($file['source'], $file['target']);
-        if ($result !== true) {
+        if (true !== $this->copyFileToDestination($file['source'], $file['target'])) {
             throw new GeneralException(sprintf(
                 "File '%s' could not be copied. An error occurred while processing the file.",
                 $value

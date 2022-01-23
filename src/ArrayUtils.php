@@ -1,13 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the ForteFramework Standard Library package.
+ *
+ * (c) Marco Spallanzani <forteframework@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Forte\Stdlib;
 
 use Forte\Stdlib\Exceptions\MissingKeyException;
 
 /**
- * Class ArrayUtils. Utility class for handling various array actions.
+ * Utility class for handling different array actions.
  *
  * @package Forte\Stdlib
+ * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class ArrayUtils
 {
@@ -22,7 +34,7 @@ class ArrayUtils
      *     ],
      * ]
      */
-    const ARRAY_KEYS_LEVEL_SEPARATOR = ".";
+    public const ARRAY_KEYS_LEVEL_SEPARATOR = '.';
 
     /**
      * Filter the given array and returns a sub-array containing only those
@@ -38,7 +50,7 @@ class ArrayUtils
         return array_filter(
             $array,
             function ($key) use ($prefix) {
-                return (strpos($key, $prefix) === 0);
+                return 0 === strpos($key, $prefix);
             },
             ARRAY_FILTER_USE_KEY
         );
@@ -94,7 +106,7 @@ class ArrayUtils
             try {
                 // If a value for the current key was found, we check
                 // if we need to iterate again through the given array;
-                if (count($keysTree) === 2) {
+                if (2 === count($keysTree)) {
                     if (is_array($value)) {
                         $value = self::getValueFromArray($keysTree[1], $value);
                     } else {

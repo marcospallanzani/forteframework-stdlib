@@ -1,14 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the ForteFramework Standard Library package.
+ *
+ * (c) Marco Spallanzani <forteframework@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Forte\Stdlib\Writers;
 
 use Forte\Stdlib\Exceptions\GeneralException;
 use Laminas\Config\Writer\AbstractWriter;
 
 /**
- * Class Dotenv.
+ * Write values to files.
  *
  * @package Forte\Stdlib\Writers
+ * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class Dotenv extends AbstractWriter
 {
@@ -26,7 +38,7 @@ class Dotenv extends AbstractWriter
         $dotenvString = '';
 
         foreach ($config as $key => $data) {
-            $dotenvString .= $key .  '=' .  $this->prepareValue($data) .  PHP_EOL;
+            $dotenvString .= $key . '=' . $this->prepareValue($data) . PHP_EOL;
         }
 
         return $dotenvString;
@@ -44,7 +56,7 @@ class Dotenv extends AbstractWriter
     protected function prepareValue($value)
     {
         if (is_object($value)) {
-            throw new GeneralException("Objects are not accepted as a possible value in a .env file.");
+            throw new GeneralException('Objects are not accepted as a possible value in a .env file.');
         }
 
         if (is_int($value) || is_float($value)) {

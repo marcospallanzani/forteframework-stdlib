@@ -1,16 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the ForteFramework Standard Library package.
+ *
+ * (c) Marco Spallanzani <forteframework@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Forte\Stdlib;
 
 use Laminas\Filter\StringToLower;
 use Laminas\Filter\Word;
 
 /**
- * Class StringUtils.
- *
  * Utility class for handling various string actions.
  *
  * @package Forte\Stdlib
+ * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class StringUtils
 {
@@ -27,9 +37,9 @@ class StringUtils
     public static function equalTo(string $check, string $equalTo, bool $caseSensitive = false): bool
     {
         if ($caseSensitive) {
-            return strcmp($check, $equalTo) === 0;
+            return 0 === strcmp($check, $equalTo);
         } else {
-            return strcasecmp($check, $equalTo) === 0;
+            return 0 === strcasecmp($check, $equalTo);
         }
     }
 
@@ -100,7 +110,11 @@ class StringUtils
      * @return bool True if the given check string is greater than or equal to the given
      * search string; false otherwise.
      */
-    public static function greaterThanEqualTo(string $check, string $greaterThanEqualTo, bool $caseSensitive = false): bool
+    public static function greaterThanEqualTo(
+        string $check,
+        string $greaterThanEqualTo,
+        bool $caseSensitive = false
+    ): bool
     {
         if ($caseSensitive) {
             return strcmp($check, $greaterThanEqualTo) >= 0;
@@ -122,9 +136,9 @@ class StringUtils
     public static function differentThan(string $check, string $differentThan, bool $caseSensitive = false): bool
     {
         if ($caseSensitive) {
-            return strcmp($check, $differentThan) !== 0;
+            return 0 !== strcmp($check, $differentThan);
         } else {
-            return strcasecmp($check, $differentThan) !== 0;
+            return 0 !== strcasecmp($check, $differentThan);
         }
     }
 
@@ -145,7 +159,7 @@ class StringUtils
             $found = stripos($check, $contains);
         }
 
-        return ((!is_bool($found) && $found >= 0) ? true : false);
+        return !is_bool($found) && $found >= 0;
     }
 
     /**
@@ -163,9 +177,9 @@ class StringUtils
         $length = strlen($startsWith);
         $subString = substr($check, 0, $length);
         if ($caseSensitive) {
-            return strcmp($subString, $startsWith) === 0;
+            return 0 === strcmp($subString, $startsWith);
         } else {
-            return strcasecmp($subString, $startsWith) === 0;
+            return 0 === strcasecmp($subString, $startsWith);
         }
     }
 
@@ -182,14 +196,14 @@ class StringUtils
     public static function endsWith(string $check, string $endsWith, bool $caseSensitive = false): bool
     {
         $length = strlen($endsWith);
-        if ($length == 0) {
+        if (0 === $length) {
             return true;
         }
         $subString = substr($check, -$length);
         if ($caseSensitive) {
-            return strcmp($subString, $endsWith) === 0;
+            return 0 === strcmp($subString, $endsWith);
         } else {
-            return strcasecmp($subString, $endsWith) === 0;
+            return 0 === strcasecmp($subString, $endsWith);
         }
     }
 
@@ -200,32 +214,32 @@ class StringUtils
      *
      * @return string String representation of the given variable
      */
-    public static function stringifyVariable($variable): string
+    public static function stringifyVariable(mixed $variable): string
     {
         if (is_array($variable)) {
             return json_encode($variable);
         } elseif (is_object($variable)) {
             return sprintf(
-                "Class type: %s. Object value: %s.",
-                get_class($variable),
+                'Class type: %s. Object value: %s.',
+                get_class((object) $variable),
                 self::stringifyVariable(get_object_vars($variable))
             );
         } elseif (is_bool($variable)) {
-            return (boolval($variable) ? 'true' : 'false');
+            return ($variable ? 'true' : 'false');
         } elseif (is_null($variable)) {
-            return "null";
+            return 'null';
         } else {
             return (string) $variable;
         }
     }
 
     /**
-     * Return a formatted message.
+     * This function replaces the given parameters in the given message.
      *
      * @param string $message The message to be formatted.
-     * @param mixed[] $parameters The values to replace in the given message.
+     * @param array $parameters The values to replace in the given message.
      *
-     * @return string
+     * @return string The formatted string.
      */
     public static function getFormattedMessage(string $message, ...$parameters): string
     {
@@ -242,8 +256,8 @@ class StringUtils
     public static function getRandomUniqueId(string $prefix = ''): string
     {
         return
-            (!empty($prefix) ? $prefix . "_" : "") .
-            sha1(rand()) . "_" .
+            ('' !== $prefix ? $prefix . '_' : '') .
+            sha1((string) rand()) . '_' .
             number_format(microtime(true), 12, '', '');
     }
 
@@ -251,20 +265,20 @@ class StringUtils
      * Strip all occurrences of the given string from the end of a string.
      *
      * @param string $string The input string.
-     * @param mixed $remove String to remove.
+     * @param string|null $remove String to remove.
      *
      * @return string The modified string.
      */
-    public static function rightTrim(string $string, $remove = null)
+    public static function rightTrim(string $string, ?string $remove = null): string
     {
         $remove = (string) $remove;
-        if(empty($remove)) {
+        if ('' === $remove) {
             return rtrim($string);
         }
 
         $length = strlen($remove);
         $offset = strlen($string) - $length;
-        while($offset > 0 && $offset == strpos($string, $remove, $offset)) {
+        while ($offset > 0 && $offset === strpos($string, $remove, $offset)) {
             $string = substr($string, 0, $offset);
             $offset = strlen($string) - $length;
         }
@@ -276,19 +290,19 @@ class StringUtils
      * Strip all occurrences of the given string from the beginning of a string.
      *
      * @param string $string The input string.
-     * @param mixed $remove String to remove.
+     * @param string|null $remove String to remove.
      *
      * @return string The modified string.
      */
-    public static function leftTrim(string $string, $remove = null): string
+    public static function leftTrim(string $string, ?string $remove = null): string
     {
         $remove = (string) $remove;
-        if(empty($remove)) {
+        if ('' === $remove) {
             return rtrim($string);
         }
 
         $length = strlen($remove);
-        while(strpos($string, $remove, 0) === 0) {
+        while (str_starts_with($string, $remove)) {
             $string = substr($string, $length, strlen($string));
         }
 
@@ -299,11 +313,11 @@ class StringUtils
      * Strip all occurrences of the given string from the beginning and the end of a string.
      *
      * @param string $string The input string.
-     * @param mixed $remove String to remove.
+     * @param string|null $remove String to remove.
      *
      * @return string The modified string.
      */
-    public static function trim(string $string, $remove = null): string
+    public static function trim(string $string, ?string $remove = null): string
     {
         return self::rightTrim(
             self::leftTrim($string, $remove),
@@ -328,7 +342,7 @@ class StringUtils
      *
      * @return string A normalized string representation of the given string value.
      */
-    public static function getNormalizedString(string $value, string $separator = ""): string
+    public static function getNormalizedString(string $value, string $separator = ''): string
     {
         if ($value) {
             /**
@@ -357,6 +371,6 @@ class StringUtils
 
             return (new StringToLower())->filter($normalizedValue);
         }
-        return "";
+        return '';
     }
 }
