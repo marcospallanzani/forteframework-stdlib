@@ -17,7 +17,7 @@ use Forte\Stdlib\Exceptions\GeneralException;
 use Laminas\Config\Writer\AbstractWriter;
 
 /**
- * Write values to files.
+ * Write values to env files.
  *
  * @package Forte\Stdlib\Writers
  */
