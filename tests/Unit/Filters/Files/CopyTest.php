@@ -25,10 +25,10 @@ class CopyTest extends BaseTest
     /**
      * Temporary files constants
      */
-    public const TEST_FILE_TMP = __DIR__ . '/file-tests';
-    public const TEST_FILE_TMP_COPY = __DIR__ . '/file-tests_COPY';
+    public const TEST_FILE_TMP = __DIR__ . DIRECTORY_SEPARATOR . 'file-tests';
+    public const TEST_FILE_TMP_COPY = __DIR__ . DIRECTORY_SEPARATOR . 'file-tests_COPY';
     public const TEST_CONTENT = 'ANY CONTENT';
-    public const TEST_WRONG_FILE = '/path/to/non/existent/file.php';
+    public const TEST_WRONG_FILE = __DIR__ . DIRECTORY_SEPARATOR . 'path-to-non-existent-file.php';
 
     /**
      * This method is called before each test.
@@ -99,7 +99,7 @@ class CopyTest extends BaseTest
     public function testFilterRuntimeFail(): void
     {
         $this->expectException(GeneralException::class);
-        $this->expectExceptionMessage("File '/path/to/non/existent/file.php' could not be copied. An error occurred while processing the file.");
+        $this->expectExceptionMessage("An error occurred while copying file " . self::TEST_FILE_TMP_COPY . ".");
         $copyFilterMock = \Mockery::mock(Copy::class)->makePartial()->shouldAllowMockingProtectedMethods();
         $copyFilterMock
             ->shouldReceive('getNewName')

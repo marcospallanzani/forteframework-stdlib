@@ -20,39 +20,38 @@ use Laminas\Filter\File\Rename;
  * This class copies a source file to a given destination.
  *
  * @package Forte\Stdlib\Filters\Files
- * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class Copy extends Rename
 {
     /**
-     * Copy the file $value to the new name set before. Return the file $value,
-     * removing all but digit characters
+     * Copy the file $value to the new name previously set. Return the file $value,
+     * removing all but digit characters.
      *
-     * @param  string|array $value Full path of file to change or $_FILES data array
+     * @param mixed $value Full path of file to change or $_FILES data array
      *
-     * @return string|array The new filename which has been set.
+     * @return string The new filename which has been set.
      *
      * @throws GeneralException
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
-        if (! is_scalar($value) && ! is_array($value)) {
-            return $value;
+        if (true === \is_string($value)) {
+            /** @var mixed $file */
+            $file = $this->getNewName($value, true);
+
+            if (true === \is_array($file)
+                && true === \array_key_exists('source', $file)
+                && true === \array_key_exists('target', $file)
+            ) {
+                if (true !== $this->copyFileToDestination($file['source'], $file['target'])) {
+                    throw new GeneralException("An error occurred while copying file {$file['source']}.");
+                }
+
+                return $file['target'];
+            }
         }
 
-        $file = $this->getNewName($value, true);
-        if (true === is_string($file)) {
-            return $file;
-        }
-
-        if (true !== $this->copyFileToDestination($file['source'], $file['target'])) {
-            throw new GeneralException(sprintf(
-                "File '%s' could not be copied. An error occurred while processing the file.",
-                $value
-            ));
-        }
-
-        return $file['target'];
+        return $value;
     }
 
     /**
