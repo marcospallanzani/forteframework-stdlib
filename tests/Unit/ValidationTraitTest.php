@@ -34,7 +34,7 @@ class ValidationTraitTest extends BaseTest
                 'comment',
                 false,
                 true,
-                'Unsupported comment with value [xxx]. Supported parameters [value1, value, a real comment].',
+                'Unsupported comment with value [xxx]. Supported parameters: [value1, value, a real comment].',
             ],
             [
                 10,
@@ -42,7 +42,7 @@ class ValidationTraitTest extends BaseTest
                 'comment',
                 false,
                 true,
-                'Unsupported comment with value [10]. Supported parameters [value1, value, a real comment].',
+                'Unsupported comment with value [10]. Supported parameters: [value1, value, a real comment].',
             ],
             [
                 '',
@@ -50,7 +50,7 @@ class ValidationTraitTest extends BaseTest
                 'comment',
                 false,
                 true,
-                'Unsupported comment with value []. Supported parameters [value1, value, a real comment].',
+                'Unsupported comment with value []. Supported parameters: [value1, value, a real comment].',
             ],
         ];
     }

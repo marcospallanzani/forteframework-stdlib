@@ -100,6 +100,7 @@ class CopyTest extends BaseTest
     public function testFilterRuntimeFail(): void
     {
         $this->expectException(GeneralException::class);
+        $this->expectExceptionMessage("File '/path/to/non/existent/file.php' could not be copied. An error occurred while processing the file.");
         $copyFilterMock = \Mockery::mock(Copy::class)->makePartial()->shouldAllowMockingProtectedMethods();
         $copyFilterMock
             ->shouldReceive('getNewName')

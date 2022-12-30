@@ -31,7 +31,7 @@ class DotenvLoaderTest extends BaseTest
     {
         $this->assertEquals(
             $this->configEnvArray,
-            DotenvLoader::loadIntoArray(__DIR__ . '/../data/config/.env.parsetest')
+            DotenvLoader::loadIntoArray(\implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'data', 'config', '.env.parsetest']))
         );
     }
 
@@ -54,9 +54,9 @@ class DotenvLoaderTest extends BaseTest
      */
     public function testLoadIntoArrayNonExistentFile(): void
     {
-        $filePath = __DIR__ . '/../data/config/xxx';
+        $filePath = \implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'data', 'config', 'xxx']);
         $this->expectException(GeneralException::class);
-        $this->expectExceptionMessage('Unable to read the environment file [$filePath].');
+        $this->expectExceptionMessage("Unable to read the environment file [$filePath].");
         DotenvLoader::loadIntoArray($filePath);
     }
 
@@ -68,11 +68,11 @@ class DotenvLoaderTest extends BaseTest
     public function testLoadIntoArrayBadlyFormedFile(): void
     {
 
-        $filePath = __DIR__ . '/../data/config/.env.wrong';
+        $filePath = \implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'data', 'config', '.env.wrong']);
         $this->expectException(GeneralException::class);
         $this->expectExceptionMessage(
             "Error occurred while reading the file '$filePath'. Error message is: Failed " .
-            'to parse dotenv file due to an unexpected equals. Failed at [=value3].'
+            'to parse dotenv file. Encountered an unexpected equals at [=value3].'
         );
         DotenvLoader::loadIntoArray($filePath);
     }

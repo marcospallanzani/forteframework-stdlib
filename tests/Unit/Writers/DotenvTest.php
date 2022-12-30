@@ -25,20 +25,6 @@ use Forte\Stdlib\Writers\Dotenv as DotenvWriter;
 class DotenvTest extends BaseTest
 {
     /**
-     * Test constants
-     */
-    public const TEST_WRITER_FILE_PATH = __DIR__ . '/../../data/config/.env.test-writer';
-
-    /**
-     * This method is called after each test.
-     */
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        @unlink(self::TEST_WRITER_FILE_PATH);
-    }
-
-    /**
      * Data provider for .env tests.
      *
      * @return array
@@ -55,10 +41,12 @@ class DotenvTest extends BaseTest
 
         $wrongData = array_merge($envData, ['key11' => new \stdClass()]);
 
+        $testWriterFilePath = \implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'data', 'config', '.env.test-writer']);
+
         // File path | data to write | success | exception
         return [
-            [self::TEST_WRITER_FILE_PATH, $envData, true, false],
-            [self::TEST_WRITER_FILE_PATH, $wrongData, false, true],
+            [$testWriterFilePath, $envData, true, false],
+            [$testWriterFilePath, $wrongData, false, true],
         ];
     }
 

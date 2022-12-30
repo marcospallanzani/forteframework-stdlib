@@ -25,13 +25,13 @@ class DirectoryUtilsTest extends BaseTest
      * Test constants.
      */
     public const TEST_BASE_DIR_TMP = __DIR__;
-    public const TEST_TEST_DIR_TMP = self::TEST_BASE_DIR_TMP . '/level1';
-    public const TEST_NESTED_DIR_TMP = self::TEST_TEST_DIR_TMP . '/level2';
-    public const TEST_FILE_LEVEL1_PHP = self::TEST_TEST_DIR_TMP . '/test1.php';
-    public const TEST_FILE_LEVEL1_INI = self::TEST_TEST_DIR_TMP . '/test1.ini';
-    public const TEST_FILE_LEVEL1_XML = self::TEST_TEST_DIR_TMP . '/test1.xml';
-    public const TEST_FILE_LEVEL2_PHP = self::TEST_NESTED_DIR_TMP . '/test2.php';
-    public const TEST_FILE_LEVEL2_INI = self::TEST_NESTED_DIR_TMP . '/test2.ini';
+    public const TEST_TEST_DIR_TMP = self::TEST_BASE_DIR_TMP . DIRECTORY_SEPARATOR . 'level1';
+    public const TEST_NESTED_DIR_TMP = self::TEST_TEST_DIR_TMP . DIRECTORY_SEPARATOR . 'level2';
+    public const TEST_FILE_LEVEL1_PHP = self::TEST_TEST_DIR_TMP . DIRECTORY_SEPARATOR . 'test1.php';
+    public const TEST_FILE_LEVEL1_INI = self::TEST_TEST_DIR_TMP . DIRECTORY_SEPARATOR . 'test1.ini';
+    public const TEST_FILE_LEVEL1_XML = self::TEST_TEST_DIR_TMP . DIRECTORY_SEPARATOR . 'test1.xml';
+    public const TEST_FILE_LEVEL2_PHP = self::TEST_NESTED_DIR_TMP . DIRECTORY_SEPARATOR . 'test2.php';
+    public const TEST_FILE_LEVEL2_INI = self::TEST_NESTED_DIR_TMP . DIRECTORY_SEPARATOR . 'test2.ini';
 
     /** @var array */
     protected $files = [

@@ -60,12 +60,12 @@ abstract class BaseTest extends TestCase
         $nonExistentKeys = ['key1.key99'];
         return [
             // File path | content type | expected content | check existent keys | check non-existent keys
-            [__DIR__ . '/../data/config/parsetest.ini', FileUtils::CONTENT_TYPE_INI, $this->configFileArray, $existentKeys, $nonExistentKeys],
-            [__DIR__ . '/../data/config/parsetest.json', FileUtils::CONTENT_TYPE_JSON, $this->configFileArray, $existentKeys, $nonExistentKeys],
-            [__DIR__ . '/../data/config/parsetest.php', FileUtils::CONTENT_TYPE_ARRAY, $this->configFileArray, $existentKeys, $nonExistentKeys],
-            [__DIR__ . '/../data/config/parsetest.xml', FileUtils::CONTENT_TYPE_XML, $this->configFileArray, $existentKeys, $nonExistentKeys],
-            [__DIR__ . '/../data/config/parsetest.yml', FileUtils::CONTENT_TYPE_YAML, $this->configFileArray, $existentKeys, $nonExistentKeys],
-            [__DIR__ . '/../data/config/.env.parsetest', FileUtils::CONTENT_TYPE_ENV, $this->configEnvArray, ['key1' => 'value1', 'key3' => 'value3', 'key5' => 'value5'], $nonExistentKeys],
+            [\implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'data', 'config', 'parsetest.ini']), FileUtils::CONTENT_TYPE_INI, $this->configFileArray, $existentKeys, $nonExistentKeys],
+            [\implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'data', 'config', 'parsetest.json']), FileUtils::CONTENT_TYPE_JSON, $this->configFileArray, $existentKeys, $nonExistentKeys],
+            [\implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'data', 'config', 'parsetest.php']), FileUtils::CONTENT_TYPE_ARRAY, $this->configFileArray, $existentKeys, $nonExistentKeys],
+            [\implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'data', 'config', 'parsetest.xml']), FileUtils::CONTENT_TYPE_XML, $this->configFileArray, $existentKeys, $nonExistentKeys],
+            [\implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'data', 'config', 'parsetest.yml']), FileUtils::CONTENT_TYPE_YAML, $this->configFileArray, $existentKeys, $nonExistentKeys],
+            [\implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'data', 'config', '.env.parsetest']), FileUtils::CONTENT_TYPE_ENV, $this->configEnvArray, ['key1' => 'value1', 'key3' => 'value3', 'key5' => 'value5'], $nonExistentKeys],
         ];
     }
 
