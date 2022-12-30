@@ -28,7 +28,7 @@ use Forte\Stdlib\FileUtils;
  */
 class ConfigFile implements ArrayableInterface
 {
-    /** @var array */
+    /** @var array<mixed, mixed> */
     protected array $configEntries = [];
 
     /** @var string */
@@ -65,11 +65,11 @@ class ConfigFile implements ArrayableInterface
     /**
      * Return an array representation of this AbstractAction subclass instance.
      *
-     * @return array An array representation of this AbstractAction subclass instance.
+     * @return array<mixed, mixed> An array representation of this AbstractAction subclass instance.
      */
     public function toArray(): array
     {
-        return ArrayUtils::variablesToArray(get_object_vars($this));
+        return ArrayUtils::variablesToArray(\get_object_vars($this));
     }
 
     /**

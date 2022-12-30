@@ -26,7 +26,7 @@ class GeneralException extends \Exception implements ArrayableInterface
     /**
      * Return an array representation of this GeneralException instance.
      *
-     * @return array Array representation of this GeneralException instance.
+     * @return array<string, mixed> Array representation of this GeneralException instance.
      */
     public function toArray(): array
     {

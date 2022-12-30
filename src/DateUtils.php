@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Forte\Stdlib;
 
+use Forte\Stdlib\Exceptions\GeneralException;
+
 /**
  * Methods to handle Date objects.
  *
@@ -21,7 +23,6 @@ namespace Forte\Stdlib;
  */
 class DateUtils
 {
-    //TODO check PHP8 format
     /**
      * Format constants
      */
@@ -34,20 +35,20 @@ class DateUtils
      * @param string $format The date format to be used.
      *
      * @return string A formatted data string representing the given micro time.
+     *
+     * @throws GeneralException
      */
-    public static function formatMicroTime(
-        float $microTime,
-        string $format = self::DATE_FORMAT_FULL_MICRO_TIME
-    ): string
+    public static function formatMicroTime(float $microTime, string $format = self::DATE_FORMAT_FULL_MICRO_TIME): string
     {
-        return date_create_from_format(
+        $date = \date_create_from_format(
             'U.u',
-            number_format(
-                $microTime,
-                6,
-                '.',
-                ''
-            )
-        )->format($format);
+            \number_format($microTime, 6, '.', '')
+        );
+
+        if ($date instanceof \DateTime) {
+            return $date->format($format);
+        }
+
+        throw new GeneralException("Not possible to create a DateTime object from the given micro time $microTime");
     }
 }

@@ -24,12 +24,7 @@ use Throwable;
  */
 class MissingKeyException extends GeneralException
 {
-    /**
-     * The missing key.
-     *
-     * @var string
-     */
-    protected $missingKey;
+    protected string $missingKey;
 
     /**
      * @param string $missingKey The missing key that thrown this exception.
@@ -57,7 +52,7 @@ class MissingKeyException extends GeneralException
     /**
      * Return an array representation of this MissingKeyException instance.
      *
-     * @return array Array representation of this MissingKeyException instance.
+     * @return array<string, mixed> Array representation of this MissingKeyException instance.
      */
     public function toArray(): array
     {

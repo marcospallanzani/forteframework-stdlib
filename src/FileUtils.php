@@ -52,7 +52,7 @@ class FileUtils
      * @param string $contentType The content type (supported types are the
      * constants whose name starts with the prefix 'CONTENT_TYPE').
      *
-     * @return array An array representing the given file path.
+     * @return array<mixed, mixed> An array representing the given file path.
      *
      * @throws GeneralException If an error occurred while parsing the file
      * (e.g. json syntax not respected).
@@ -85,12 +85,12 @@ class FileUtils
                     break;
             }
 
-            if (is_array($parsedContent)) {
+            if (\is_array($parsedContent)) {
                 return $parsedContent;
             }
             return [];
         } catch (RuntimeException $runtimeException) {
-            throw new GeneralException(sprintf(
+            throw new GeneralException(\sprintf(
                 "An error occurred while parsing the given file '%s' and content '%s'. Error message is: '%s'.",
                 $filePath,
                 $contentType,
@@ -156,7 +156,7 @@ class FileUtils
      * Return an array containing all supported content types
      * (class constants with prefix 'CONTENT_TYPE').
      *
-     * @return array An array of supported content types.
+     * @return array<mixed, mixed> An array of supported content types.
      */
     public static function getSupportedContentTypes(): array
     {
@@ -252,7 +252,7 @@ class FileUtils
      * - use the $exportDirPath parameter to define the export directory; if this parameter
      *   is empty, the execution directory will be used.
      *
-     * @param array $content The array to write to the destination file.
+     * @param array<mixed, mixed> $content The array to write to the destination file.
      * @param string $contentType The file content type (accepted values are
      * FileUtils constants starting with "CONTENT_TYPE_").
      * @param string $destinationFullFilePath The destination file path. If not given,

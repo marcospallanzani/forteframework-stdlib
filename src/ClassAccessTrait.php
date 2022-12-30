@@ -27,7 +27,7 @@ trait ClassAccessTrait
      * @param string $prefix The prefix to filter class constants by.
      * An empty string will return all class constants.
      *
-     * @return array An array whose keys are class constant names,
+     * @return array<mixed, mixed> An array whose keys are class constant names,
      * and whose values are their values.
      */
     public static function getClassConstants(string $prefix = ''): array
@@ -54,7 +54,7 @@ trait ClassAccessTrait
      * @param string $prefix The prefix to filter class static property by.
      * An empty string will return all class static properties.
      *
-     * @return array An array whose keys are class static property names,
+     * @return array<mixed, mixed> An array whose keys are class static property names,
      * and whose values are their values.
      */
     public static function getClassStaticProperties(string $prefix = ''): array

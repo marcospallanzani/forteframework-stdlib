@@ -27,7 +27,7 @@ class Dotenv extends AbstractWriter
     /**
      * Convert the given config array to a .env string.
      *
-     * @param array $config The array to be converted to a .env string.
+     * @param array<mixed, mixed> $config The array to be converted to a .env string.
      *
      * @return string .env string representation of the given config array.
      *
@@ -49,7 +49,7 @@ class Dotenv extends AbstractWriter
      *
      * @param mixed $value The value to be prepared to be written in a .env file.
      *
-     * @return string
+     * @return mixed
      *
      * @throws GeneralException
      */

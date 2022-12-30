@@ -27,8 +27,8 @@ class DirectoryUtils
      * excluded sub-directories.
      *
      * @param string $directoryPath The directory path to explore.
-     * @param array $filePatterns The file patterns to filter the file list.
-     * @param array $excludedDirectories The list of directories to exclude from the final list.
+     * @param array<string> $filePatterns The file patterns to filter the file list.
+     * @param array<string> $excludedDirectories The list of directories to exclude from the final list.
      *
      * @return \Iterator An iterator instance on all the files in the given directory path.
      */
@@ -44,7 +44,7 @@ class DirectoryUtils
             function ($current, $key, $iterator) use ($filePatterns, $excludedDirectories) {
                 // Allow recursion only on those directories that are not in the exclude list
                 if ($iterator->hasChildren()) {
-                    if (in_array($iterator->getSubPathName(), $excludedDirectories, true)) {
+                    if (\in_array($iterator->getSubPathName(), $excludedDirectories, true)) {
                         return false;
                     }
                     return true;
@@ -52,7 +52,7 @@ class DirectoryUtils
 
                 // Check the file pattern
                 foreach ($filePatterns as $filePattern) {
-                    if (fnmatch($filePattern, $iterator->getSubPathName())) {
+                    if (\fnmatch($filePattern, $iterator->getSubPathName())) {
                         return true;
                     }
                 }

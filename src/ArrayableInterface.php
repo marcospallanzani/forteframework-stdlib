@@ -21,11 +21,10 @@ namespace Forte\Stdlib;
  */
 interface ArrayableInterface
 {
-    //TODO isn't there a default PHP interface for this action?
     /**
      * Return an array representation of the implementing instance.
      *
-     * @return array
+     * @return array<mixed, mixed>
      */
     public function toArray(): array;
 }
