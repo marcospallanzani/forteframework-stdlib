@@ -1,10 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the ForteFramework Standard Library package.
+ *
+ * (c) Marco Spallanzani <forteframework@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Forte\Stdlib\Exceptions;
 
 /**
- * Trait ThrowErrorsTrait.
- *
  * Methods to easily throw exceptions.
  *
  * @package Forte\Stdlib\Exceptions
@@ -15,7 +24,7 @@ trait ThrowErrorsTrait
      * Throw a GeneralException with the given message and parameters.
      *
      * @param string $message The exception message.
-     * @param string[] $parameters The values to replace in the error message.
+     * @param array<string> $parameters The values to replace in the error message.
      *
      * @throws GeneralException
      */
@@ -31,9 +40,9 @@ trait ThrowErrorsTrait
      * Return a GeneralException with the given message and parameters.
      *
      * @param string $message The exception message.
-     * @param string[] $parameters The values to replace in the error message.
+     * @param array<string> $parameters The values to replace in the error message.
      *
-     * @return GeneralException
+     * @return GeneralException A GeneralException instance with the given message and parameters.
      */
     public function getGeneralException(
         string $message,
@@ -48,7 +57,7 @@ trait ThrowErrorsTrait
      *
      * @param string $key The missing key.
      * @param string $message The exception message.
-     * @param string[] $parameters The values to replace in the error message.
+     * @param array<string> $parameters The values to replace in the error message.
      *
      * @throws MissingKeyException
      */
@@ -68,7 +77,7 @@ trait ThrowErrorsTrait
      * @param string $message The exception message.
      * @param string ...$parameters The values to replace in the error message.
      *
-     * @return MissingKeyException
+     * @return MissingKeyException A MissingKeyException instance with the given key, message and parameters.
      */
     public function getMissingKeyException(
         string $key,
@@ -83,7 +92,7 @@ trait ThrowErrorsTrait
      * Throw a WrongParameterException with the given message and parameters.
      *
      * @param string $message The exception message.
-     * @param string[] $parameters The values to replace in the error message.
+     * @param array<string> $parameters The values to replace in the error message.
      *
      * @throws WrongParameterException
      */
@@ -101,7 +110,7 @@ trait ThrowErrorsTrait
      * @param string $message The exception message.
      * @param string ...$parameters The values to replace in the error message.
      *
-     * @return WrongParameterException
+     * @return WrongParameterException A WrongParameterException instance with the given message and parameters.
      */
     public function getWrongParameterException(
         string $message,
@@ -110,5 +119,4 @@ trait ThrowErrorsTrait
     {
         return new WrongParameterException(vsprintf($message, $parameters));
     }
-
 }

@@ -1,12 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the ForteFramework Standard Library package.
+ *
+ * (c) Marco Spallanzani <forteframework@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Forte\Stdlib\Writers;
 
 use Forte\Stdlib\Exceptions\GeneralException;
 use Laminas\Config\Writer\AbstractWriter;
 
 /**
- * Class Dotenv.
+ * Write values to env files.
  *
  * @package Forte\Stdlib\Writers
  */
@@ -15,7 +26,7 @@ class Dotenv extends AbstractWriter
     /**
      * Convert the given config array to a .env string.
      *
-     * @param array $config The array to be converted to a .env string.
+     * @param array<mixed, mixed> $config The array to be converted to a .env string.
      *
      * @return string .env string representation of the given config array.
      *
@@ -26,7 +37,7 @@ class Dotenv extends AbstractWriter
         $dotenvString = '';
 
         foreach ($config as $key => $data) {
-            $dotenvString .= $key .  '=' .  $this->prepareValue($data) .  PHP_EOL;
+            $dotenvString .= $key . '=' . $this->prepareValue($data) . PHP_EOL;
         }
 
         return $dotenvString;
@@ -37,14 +48,14 @@ class Dotenv extends AbstractWriter
      *
      * @param mixed $value The value to be prepared to be written in a .env file.
      *
-     * @return string
+     * @return mixed
      *
      * @throws GeneralException
      */
     protected function prepareValue($value)
     {
         if (is_object($value)) {
-            throw new GeneralException("Objects are not accepted as a possible value in a .env file.");
+            throw new GeneralException('Objects are not accepted as a possible value in a .env file.');
         }
 
         if (is_int($value) || is_float($value)) {

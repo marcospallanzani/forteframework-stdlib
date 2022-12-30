@@ -1,9 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the ForteFramework Standard Library package.
+ *
+ * (c) Marco Spallanzani <forteframework@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Forte\Stdlib;
 
 /**
- * Class DirectoryUtils.
+ * Set of methods to handle a directory and its content.
  *
  * @package Forte\Stdlib
  */
@@ -15,10 +26,10 @@ class DirectoryUtils
      * excluded sub-directories.
      *
      * @param string $directoryPath The directory path to explore.
-     * @param array $filePatterns The file patterns to filter the file list.
-     * @param array $excludedDirectories The list of directories to exclude from the final list.
+     * @param array<string> $filePatterns The file patterns to filter the file list.
+     * @param array<string> $excludedDirectories The list of directories to exclude from the final list.
      *
-     * @return \Iterator
+     * @return \Iterator An iterator instance on all the files in the given directory path.
      */
     public static function getFilesList(
         string $directoryPath,
@@ -32,16 +43,15 @@ class DirectoryUtils
             function ($current, $key, $iterator) use ($filePatterns, $excludedDirectories) {
                 // Allow recursion only on those directories that are not in the exclude list
                 if ($iterator->hasChildren()) {
-                    if (in_array($iterator->getSubPathName(), $excludedDirectories)) {
+                    if (\in_array($iterator->getSubPathName(), $excludedDirectories, true)) {
                         return false;
-                    } else {
-                        return true;
                     }
+                    return true;
                 }
 
                 // Check the file pattern
                 foreach ($filePatterns as $filePattern) {
-                    if (fnmatch($filePattern, $iterator->getSubPathName())) {
+                    if (\fnmatch($filePattern, $iterator->getSubPathName())) {
                         return true;
                     }
                 }

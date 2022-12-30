@@ -1,11 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the ForteFramework Standard Library package.
+ *
+ * (c) Marco Spallanzani <forteframework@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Forte\Stdlib;
 
 use Forte\Stdlib\Exceptions\MissingKeyException;
 
 /**
- * Class ArrayUtils. Utility class for handling various array actions.
+ * Utility class for handling different array actions.
  *
  * @package Forte\Stdlib
  */
@@ -22,23 +33,23 @@ class ArrayUtils
      *     ],
      * ]
      */
-    const ARRAY_KEYS_LEVEL_SEPARATOR = ".";
+    public const ARRAY_KEYS_LEVEL_SEPARATOR = '.';
 
     /**
      * Filter the given array and returns a sub-array containing only those
      * elements whose keys start with the given prefix.
      *
-     * @param array $array An array to filter by key.
+     * @param array<mixed, mixed> $array An array to filter by key.
      * @param string $prefix The prefix to filter by row key.
      *
-     * @return array An array whose keys starts with the given prefix.
+     * @return array<mixed, mixed> An array whose keys starts with the given prefix.
      */
     public static function filterArrayByPrefixKey(array $array, string $prefix = ''): array
     {
-        return array_filter(
+        return \array_filter(
             $array,
             function ($key) use ($prefix) {
-                return (strpos($key, $prefix) === 0);
+                return \str_starts_with((string) $key, $prefix);
             },
             ARRAY_FILTER_USE_KEY
         );
@@ -47,9 +58,9 @@ class ArrayUtils
     /**
      * Convert all elements in the given variables list to an array.
      *
-     * @param array $variables
+     * @param array<mixed, mixed> $variables
      *
-     * @return array
+     * @return array<mixed, mixed>
      */
     public static function variablesToArray(array $variables): array
     {
@@ -57,7 +68,7 @@ class ArrayUtils
         foreach ($variables as $key => $variable) {
             if ($variable instanceof ArrayableInterface) {
                 $toArray[$key] = $variable->toArray();
-            } elseif (is_array($variable)) {
+            } elseif (\is_array($variable)) {
                 $toArray[$key] = self::variablesToArray($variable);
             } else {
                 $toArray[$key] = $variable;
@@ -71,7 +82,7 @@ class ArrayUtils
      * Return the array value for the given key; if not defined, an error will be thrown.
      *
      * @param string $key The multi-level array key.
-     * @param array $array The array to access with the given multi-level key.
+     * @param array<mixed, mixed> $array The array to access with the given multi-level key.
      *
      * @return mixed
      *
@@ -81,11 +92,11 @@ class ArrayUtils
     {
         $keysTree = explode(self::ARRAY_KEYS_LEVEL_SEPARATOR, $key, 2);
         $value = null;
-        if (count($keysTree) <= 2) {
+        if (\count($keysTree) <= 2) {
             // We check if a value for the current array key exists;
             // If it does not exist, we throw an error.
             $currentKey = $keysTree[0];
-            if (array_key_exists($currentKey, $array)) {
+            if (\array_key_exists($currentKey, $array)) {
                 $value = $array[$currentKey];
             } else {
                 throw new MissingKeyException($key, "Array key '$key' not found.");
@@ -94,8 +105,8 @@ class ArrayUtils
             try {
                 // If a value for the current key was found, we check
                 // if we need to iterate again through the given array;
-                if (count($keysTree) === 2) {
-                    if (is_array($value)) {
+                if (2 === \count($keysTree)) {
+                    if (\is_array($value)) {
                         $value = self::getValueFromArray($keysTree[1], $value);
                     } else {
                         throw new MissingKeyException($keysTree[1], "Array key '$keysTree[1]' not found.");

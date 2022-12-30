@@ -1,11 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the ForteFramework Standard Library package.
+ *
+ * (c) Marco Spallanzani <forteframework@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Forte\Stdlib;
 
 use Forte\Stdlib\Exceptions\WrongParameterException;
 
 /**
- * Trait ValidationTrait.
+ * Validation methods.
  *
  * @package Forte\Stdlib
  */
@@ -56,7 +67,7 @@ trait ValidationTrait
      *
      * @param array $list The list to be checked.
      * @param string $expectedClass The expected item class name.
-     * @param string $parameterName The list name (for error message).
+     * @param string $parameterName An identifier of the given object list (for log purpose only).
      *
      * @return bool True if the given list only has class instances of the given type.
      *
@@ -74,13 +85,13 @@ trait ValidationTrait
     }
 
     /**
-     * Check if the given parameter is contained in the passed accepted parameters list.
+     * Check if the given parameter is contained in the given accepted parameters list.
      *
      * @param mixed $parameter The parameter value to be validated.
      * @param array $acceptedParameters The accepted parameter values list.
      * @param string $parameterName A short description of the specified parameter.
      *
-     * @return bool
+     * @return bool True if the given parameter is contained in the given list of parameters; false otherwise.
      *
      * @throws Exceptions\WrongParameterException
      */
@@ -90,9 +101,10 @@ trait ValidationTrait
         string $parameterName
     ): bool
     {
-        if (!in_array($parameter, $acceptedParameters)) {
+        //TODO this function needs to be refactored.. is it really required? is it an associative array?
+        if (!in_array($parameter, $acceptedParameters, true)) {
             throw new WrongParameterException(sprintf(
-                "Unsupported %s with value [%s]. Supported visibilities [%s].",
+                'Unsupported %s with value [%s]. Supported parameters: [%s].',
                 $parameterName,
                 $parameter,
                 implode(', ', $acceptedParameters)

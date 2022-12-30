@@ -1,13 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the ForteFramework Standard Library package.
+ *
+ * (c) Marco Spallanzani <forteframework@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Forte\Stdlib;
 
+use Forte\Stdlib\Exceptions\GeneralException;
 use Laminas\Filter\StringToLower;
 use Laminas\Filter\Word;
 
 /**
- * Class StringUtils.
- *
  * Utility class for handling various string actions.
  *
  * @package Forte\Stdlib
@@ -27,9 +37,9 @@ class StringUtils
     public static function equalTo(string $check, string $equalTo, bool $caseSensitive = false): bool
     {
         if ($caseSensitive) {
-            return strcmp($check, $equalTo) === 0;
+            return 0 === \strcmp($check, $equalTo);
         } else {
-            return strcasecmp($check, $equalTo) === 0;
+            return 0 === \strcasecmp($check, $equalTo);
         }
     }
 
@@ -46,9 +56,9 @@ class StringUtils
     public static function lessThan(string $check, string $lessThan, bool $caseSensitive = false): bool
     {
         if ($caseSensitive) {
-            return strcmp($check, $lessThan) < 0;
+            return \strcmp($check, $lessThan) < 0;
         } else {
-            return strcasecmp($check, $lessThan) < 0;
+            return \strcasecmp($check, $lessThan) < 0;
         }
     }
 
@@ -65,9 +75,9 @@ class StringUtils
     public static function lessThanEqualTo(string $check, string $lessThanEqualTo, bool $caseSensitive = false): bool
     {
         if ($caseSensitive) {
-            return strcmp($check, $lessThanEqualTo) <= 0;
+            return \strcmp($check, $lessThanEqualTo) <= 0;
         } else {
-            return strcasecmp($check, $lessThanEqualTo) <= 0;
+            return \strcasecmp($check, $lessThanEqualTo) <= 0;
         }
     }
 
@@ -84,9 +94,9 @@ class StringUtils
     public static function greaterThan(string $check, string $greaterThan, bool $caseSensitive = false): bool
     {
         if ($caseSensitive) {
-            return strcmp($check, $greaterThan) > 0;
+            return \strcmp($check, $greaterThan) > 0;
         } else {
-            return strcasecmp($check, $greaterThan) > 0;
+            return \strcasecmp($check, $greaterThan) > 0;
         }
     }
 
@@ -100,12 +110,16 @@ class StringUtils
      * @return bool True if the given check string is greater than or equal to the given
      * search string; false otherwise.
      */
-    public static function greaterThanEqualTo(string $check, string $greaterThanEqualTo, bool $caseSensitive = false): bool
+    public static function greaterThanEqualTo(
+        string $check,
+        string $greaterThanEqualTo,
+        bool $caseSensitive = false
+    ): bool
     {
         if ($caseSensitive) {
-            return strcmp($check, $greaterThanEqualTo) >= 0;
+            return \strcmp($check, $greaterThanEqualTo) >= 0;
         } else {
-            return strcasecmp($check, $greaterThanEqualTo) >= 0;
+            return \strcasecmp($check, $greaterThanEqualTo) >= 0;
         }
     }
 
@@ -122,9 +136,9 @@ class StringUtils
     public static function differentThan(string $check, string $differentThan, bool $caseSensitive = false): bool
     {
         if ($caseSensitive) {
-            return strcmp($check, $differentThan) !== 0;
+            return 0 !== \strcmp($check, $differentThan);
         } else {
-            return strcasecmp($check, $differentThan) !== 0;
+            return 0 !== \strcasecmp($check, $differentThan);
         }
     }
 
@@ -140,12 +154,12 @@ class StringUtils
     public static function contains(string $check, string $contains, bool $caseSensitive = false): bool
     {
         if ($caseSensitive) {
-            $found = strpos($check, $contains);
+            $found = \strpos($check, $contains);
         } else {
-            $found = stripos($check, $contains);
+            $found = \stripos($check, $contains);
         }
 
-        return ((!is_bool($found) && $found >= 0) ? true : false);
+        return !\is_bool($found) && $found >= 0;
     }
 
     /**
@@ -160,12 +174,12 @@ class StringUtils
      */
     public static function startsWith(string $check, string $startsWith, bool $caseSensitive = false): bool
     {
-        $length = strlen($startsWith);
-        $subString = substr($check, 0, $length);
+        $length = \strlen($startsWith);
+        $subString = \substr($check, 0, $length);
         if ($caseSensitive) {
-            return strcmp($subString, $startsWith) === 0;
+            return 0 === \strcmp($subString, $startsWith);
         } else {
-            return strcasecmp($subString, $startsWith) === 0;
+            return 0 === \strcasecmp($subString, $startsWith);
         }
     }
 
@@ -181,15 +195,15 @@ class StringUtils
      */
     public static function endsWith(string $check, string $endsWith, bool $caseSensitive = false): bool
     {
-        $length = strlen($endsWith);
-        if ($length == 0) {
+        $length = \strlen($endsWith);
+        if (0 === $length) {
             return true;
         }
-        $subString = substr($check, -$length);
+        $subString = \substr($check, -$length);
         if ($caseSensitive) {
-            return strcmp($subString, $endsWith) === 0;
+            return 0 === \strcmp($subString, $endsWith);
         } else {
-            return strcasecmp($subString, $endsWith) === 0;
+            return 0 === \strcasecmp($subString, $endsWith);
         }
     }
 
@@ -199,37 +213,42 @@ class StringUtils
      * @param mixed $variable The variable to be converted to a string.
      *
      * @return string String representation of the given variable
+     *
+     * @throws \JsonException An error occurred while converting an array to a string.
+     * @throws GeneralException The given variable is of an unsupported type.
      */
-    public static function stringifyVariable($variable): string
+    public static function stringifyVariable(mixed $variable): string
     {
-        if (is_array($variable)) {
-            return json_encode($variable);
-        } elseif (is_object($variable)) {
-            return sprintf(
-                "Class type: %s. Object value: %s.",
-                get_class($variable),
-                self::stringifyVariable(get_object_vars($variable))
+        if (\is_array($variable)) {
+            return \json_encode($variable, JSON_THROW_ON_ERROR);
+        } elseif (\is_object($variable)) {
+            return \sprintf(
+                'Class type: %s. Object value: %s.',
+                \get_class((object) $variable),
+                self::stringifyVariable(\get_object_vars($variable))
             );
-        } elseif (is_bool($variable)) {
-            return (boolval($variable) ? 'true' : 'false');
-        } elseif (is_null($variable)) {
-            return "null";
-        } else {
-            return (string) $variable;
+        } elseif (\is_bool($variable)) {
+            return ($variable ? 'true' : 'false');
+        } elseif (\is_null($variable)) {
+            return 'null';
+        } elseif (\is_scalar($variable)) {
+            return \strval($variable);
         }
+
+        throw new GeneralException('Impossible to convert the given value to a string');
     }
 
     /**
-     * Return a formatted message.
+     * This function replaces the given parameters in the given message.
      *
      * @param string $message The message to be formatted.
-     * @param mixed[] $parameters The values to replace in the given message.
+     * @param array<mixed, mixed> $parameters The values to replace in the given message.
      *
-     * @return string
+     * @return string The formatted string.
      */
     public static function getFormattedMessage(string $message, ...$parameters): string
     {
-        return vsprintf($message, $parameters);
+        return \vsprintf($message, $parameters);
     }
 
     /**
@@ -242,68 +261,68 @@ class StringUtils
     public static function getRandomUniqueId(string $prefix = ''): string
     {
         return
-            (!empty($prefix) ? $prefix . "_" : "") .
-            sha1(rand()) . "_" .
-            number_format(microtime(true), 12, '', '');
+            ('' !== $prefix ? $prefix . '_' : '') .
+            \sha1((string) \rand()) . '_' .
+            \number_format(\microtime(true), 12, '', '');
     }
 
     /**
      * Strip all occurrences of the given string from the end of a string.
      *
      * @param string $string The input string.
-     * @param mixed $remove String to remove.
+     * @param string|null $remove String to remove.
      *
      * @return string The modified string.
      */
-    public static function rightTrim(string $string, $remove = null)
+    public static function rightTrim(string $string, ?string $remove = null): string
     {
         $remove = (string) $remove;
-        if(empty($remove)) {
-            return rtrim($string);
+        if ('' === $remove) {
+            return \rtrim($string);
         }
 
-        $length = strlen($remove);
-        $offset = strlen($string) - $length;
-        while($offset > 0 && $offset == strpos($string, $remove, $offset)) {
-            $string = substr($string, 0, $offset);
-            $offset = strlen($string) - $length;
+        $length = \strlen($remove);
+        $offset = \strlen($string) - $length;
+        while ($offset > 0 && $offset === \strpos($string, $remove, $offset)) {
+            $string = \substr($string, 0, $offset);
+            $offset = \strlen($string) - $length;
         }
 
-        return rtrim($string);
+        return \rtrim($string);
     }
 
     /**
      * Strip all occurrences of the given string from the beginning of a string.
      *
      * @param string $string The input string.
-     * @param mixed $remove String to remove.
+     * @param string|null $remove String to remove.
      *
      * @return string The modified string.
      */
-    public static function leftTrim(string $string, $remove = null): string
+    public static function leftTrim(string $string, ?string $remove = null): string
     {
         $remove = (string) $remove;
-        if(empty($remove)) {
-            return rtrim($string);
+        if ('' === $remove) {
+            return \rtrim($string);
         }
 
-        $length = strlen($remove);
-        while(strpos($string, $remove, 0) === 0) {
-            $string = substr($string, $length, strlen($string));
+        $length = \strlen($remove);
+        while (\str_starts_with($string, $remove)) {
+            $string = \substr($string, $length, \strlen($string));
         }
 
-        return rtrim($string);
+        return \rtrim($string);
     }
 
     /**
      * Strip all occurrences of the given string from the beginning and the end of a string.
      *
      * @param string $string The input string.
-     * @param mixed $remove String to remove.
+     * @param string|null $remove String to remove.
      *
      * @return string The modified string.
      */
-    public static function trim(string $string, $remove = null): string
+    public static function trim(string $string, ?string $remove = null): string
     {
         return self::rightTrim(
             self::leftTrim($string, $remove),
@@ -328,7 +347,7 @@ class StringUtils
      *
      * @return string A normalized string representation of the given string value.
      */
-    public static function getNormalizedString(string $value, string $separator = ""): string
+    public static function getNormalizedString(string $value, string $separator = ''): string
     {
         if ($value) {
             /**
@@ -355,8 +374,8 @@ class StringUtils
                 $normalizedValue = (new Word\SeparatorToSeparator(' ', $separator))->filter($normalizedValue);
             }
 
-            return (new StringToLower())->filter($normalizedValue);
+            return \strval((new StringToLower())->filter($normalizedValue));
         }
-        return "";
+        return '';
     }
 }

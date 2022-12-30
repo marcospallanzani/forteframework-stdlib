@@ -1,13 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the ForteFramework Standard Library package.
+ *
+ * (c) Marco Spallanzani <forteframework@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Forte\Stdlib\Tests\Unit;
 
 use Forte\Stdlib\DirectoryUtils;
 
 /**
- * Class DirectoryUtilsTest.
- *
  * @package Forte\Stdlib\Tests\Unit
  */
 class DirectoryUtilsTest extends BaseTest
@@ -15,18 +23,16 @@ class DirectoryUtilsTest extends BaseTest
     /**
      * Test constants.
      */
-    const TEST_BASE_DIR_TMP    = __DIR__;
-    const TEST_TEST_DIR_TMP    = self::TEST_BASE_DIR_TMP . '/level1';
-    const TEST_NESTED_DIR_TMP  = self::TEST_TEST_DIR_TMP . '/level2';
-    const TEST_FILE_LEVEL1_PHP = self::TEST_TEST_DIR_TMP . '/test1.php';
-    const TEST_FILE_LEVEL1_INI = self::TEST_TEST_DIR_TMP . '/test1.ini';
-    const TEST_FILE_LEVEL1_XML = self::TEST_TEST_DIR_TMP . '/test1.xml';
-    const TEST_FILE_LEVEL2_PHP = self::TEST_NESTED_DIR_TMP . '/test2.php';
-    const TEST_FILE_LEVEL2_INI = self::TEST_NESTED_DIR_TMP . '/test2.ini';
+    public const TEST_BASE_DIR_TMP = __DIR__;
+    public const TEST_TEST_DIR_TMP = self::TEST_BASE_DIR_TMP . DIRECTORY_SEPARATOR . 'level1';
+    public const TEST_NESTED_DIR_TMP = self::TEST_TEST_DIR_TMP . DIRECTORY_SEPARATOR . 'level2';
+    public const TEST_FILE_LEVEL1_PHP = self::TEST_TEST_DIR_TMP . DIRECTORY_SEPARATOR . 'test1.php';
+    public const TEST_FILE_LEVEL1_INI = self::TEST_TEST_DIR_TMP . DIRECTORY_SEPARATOR . 'test1.ini';
+    public const TEST_FILE_LEVEL1_XML = self::TEST_TEST_DIR_TMP . DIRECTORY_SEPARATOR . 'test1.xml';
+    public const TEST_FILE_LEVEL2_PHP = self::TEST_NESTED_DIR_TMP . DIRECTORY_SEPARATOR . 'test2.php';
+    public const TEST_FILE_LEVEL2_INI = self::TEST_NESTED_DIR_TMP . DIRECTORY_SEPARATOR . 'test2.ini';
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $files = [
         self::TEST_FILE_LEVEL1_PHP,
         self::TEST_FILE_LEVEL1_INI,
@@ -54,7 +60,7 @@ class DirectoryUtilsTest extends BaseTest
         @mkdir(self::TEST_NESTED_DIR_TMP);
 
         foreach ($this->files as $file) {
-            @file_put_contents($file, "TEST");
+            @file_put_contents($file, 'TEST');
         }
     }
 
@@ -117,7 +123,7 @@ class DirectoryUtilsTest extends BaseTest
         $files = DirectoryUtils::getFilesList(self::TEST_TEST_DIR_TMP, $filePatterns, $excludedDirectories);
         $this->assertCount(count($expectedFiles), $files);
         foreach ($files as $file) {
-            $this->assertTrue(in_array($file->getPathName(), $expectedFiles));
+            $this->assertTrue(in_array($file->getPathName(), $expectedFiles, true));
         }
     }
 }

@@ -1,10 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the ForteFramework Standard Library package.
+ *
+ * (c) Marco Spallanzani <forteframework@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Forte\Stdlib;
 
 use Forte\Stdlib\Exceptions\GeneralException;
 use Forte\Stdlib\Writers\Dotenv as DotenvWriter;
-use Symfony\Component\Yaml\Yaml as YamlReader;
 use Laminas\Config\Exception\RuntimeException;
 use Laminas\Config\Reader\Ini as IniReader;
 use Laminas\Config\Reader\Json as JsonReader;
@@ -13,9 +23,10 @@ use Laminas\Config\Writer\Ini as IniWriter;
 use Laminas\Config\Writer\Json as JsonWriter;
 use Laminas\Config\Writer\PhpArray;
 use Laminas\Config\Writer\Xml as XmlWriter;
+use Symfony\Component\Yaml\Yaml as YamlReader;
 
 /**
- * Class FileUtils. Utility class for handling various file actions.
+ * Utility class for handling various file actions.
  *
  * @package Forte\Stdlib
  */
@@ -26,12 +37,12 @@ class FileUtils
     /**
      * Supported content types.
      */
-    const CONTENT_TYPE_JSON  = "content_json";
-    const CONTENT_TYPE_INI   = "content_ini";
-    const CONTENT_TYPE_YAML  = "content_yaml";
-    const CONTENT_TYPE_XML   = "content_xml";
-    const CONTENT_TYPE_ARRAY = "content_array";
-    const CONTENT_TYPE_ENV   = "content_env";
+    public const CONTENT_TYPE_JSON = 'content_json';
+    public const CONTENT_TYPE_INI = 'content_ini';
+    public const CONTENT_TYPE_YAML = 'content_yaml';
+    public const CONTENT_TYPE_XML = 'content_xml';
+    public const CONTENT_TYPE_ARRAY = 'content_array';
+    public const CONTENT_TYPE_ENV = 'content_env';
 
     /**
      * Parse the given file path and return its content as an array.
@@ -40,7 +51,7 @@ class FileUtils
      * @param string $contentType The content type (supported types are the
      * constants whose name starts with the prefix 'CONTENT_TYPE').
      *
-     * @return array An array representing the given file path.
+     * @return array<mixed, mixed> An array representing the given file path.
      *
      * @throws GeneralException If an error occurred while parsing the file
      * (e.g. json syntax not respected).
@@ -66,19 +77,19 @@ class FileUtils
                     $parsedContent = $xmlReader->fromFile($filePath);
                     break;
                 case self::CONTENT_TYPE_ARRAY:
-                    $parsedContent = include ($filePath);
+                    $parsedContent = include $filePath;
                     break;
                 case self::CONTENT_TYPE_ENV:
                     $parsedContent = DotenvLoader::loadIntoArray($filePath);
                     break;
             }
 
-            if (is_array($parsedContent)) {
+            if (\is_array($parsedContent)) {
                 return $parsedContent;
             }
             return [];
         } catch (RuntimeException $runtimeException) {
-            throw new GeneralException(sprintf(
+            throw new GeneralException(\sprintf(
                 "An error occurred while parsing the given file '%s' and content '%s'. Error message is: '%s'.",
                 $filePath,
                 $contentType,
@@ -144,7 +155,7 @@ class FileUtils
      * Return an array containing all supported content types
      * (class constants with prefix 'CONTENT_TYPE').
      *
-     * @return array An array of supported content types.
+     * @return array<mixed, mixed> An array of supported content types.
      */
     public static function getSupportedContentTypes(): array
     {
@@ -167,19 +178,19 @@ class FileUtils
     {
         switch ($contentType) {
             case self::CONTENT_TYPE_INI:
-                return "ini";
+                return 'ini';
             case self::CONTENT_TYPE_YAML:
-                return "yml";
+                return 'yml';
             case self::CONTENT_TYPE_JSON:
-                return "json";
+                return 'json';
             case self::CONTENT_TYPE_XML:
-                return "xml";
+                return 'xml';
             case self::CONTENT_TYPE_ARRAY:
-                return "php";
+                return 'php';
             case self::CONTENT_TYPE_ENV:
-                return "";
+                return '';
             default:
-                throw new GeneralException("Content type not supported.");
+                throw new GeneralException('Content type not supported.');
         }
     }
 
@@ -195,20 +206,20 @@ class FileUtils
     public static function getContentTypeByFileExtension(string $extension): string
     {
         switch ($extension) {
-            case "ini":
+            case 'ini':
                 return self::CONTENT_TYPE_INI;
-            case "yml":
+            case 'yml':
                 return self::CONTENT_TYPE_YAML;
-            case "json":
+            case 'json':
                 return self::CONTENT_TYPE_JSON;
-            case "xml":
+            case 'xml':
                 return self::CONTENT_TYPE_XML;
-            case "php":
+            case 'php':
                 return self::CONTENT_TYPE_ARRAY;
-            case "":
+            case '':
                 return self::CONTENT_TYPE_ENV;
             default:
-                throw new GeneralException("File extension not supported.");
+                throw new GeneralException('File extension not supported.');
         }
     }
 
@@ -240,7 +251,7 @@ class FileUtils
      * - use the $exportDirPath parameter to define the export directory; if this parameter
      *   is empty, the execution directory will be used.
      *
-     * @param array $content The array to write to the destination file.
+     * @param array<mixed, mixed> $content The array to write to the destination file.
      * @param string $contentType The file content type (accepted values are
      * FileUtils constants starting with "CONTENT_TYPE_").
      * @param string $destinationFullFilePath The destination file path. If not given,
@@ -260,31 +271,31 @@ class FileUtils
     public static function exportArrayReportToFile(
         array $content,
         string $contentType = self::CONTENT_TYPE_JSON,
-        string $destinationFullFilePath = "",
-        string $defaultNamePrefix = "export_data",
-        string $exportDirPath = ""
+        string $destinationFullFilePath = '',
+        string $defaultNamePrefix = 'export_data',
+        string $exportDirPath = ''
     ): string
     {
-        if (!empty($destinationFullFilePath) && is_dir($destinationFullFilePath)) {
-            throw new GeneralException("The given destination file path cannot be a directory.");
+        if ('' !== $destinationFullFilePath && is_dir($destinationFullFilePath)) {
+            throw new GeneralException('The given destination file path cannot be a directory.');
         }
 
-        if (empty($destinationFullFilePath)) {
+        if ('' === $destinationFullFilePath) {
             // We check the given parameters
-            if (!empty($exportDirPath)) {
+            if ('' !== $exportDirPath) {
                 $exportDirPath = rtrim($exportDirPath, DIRECTORY_SEPARATOR);
             } else {
-                $exportDirPath = ".";
+                $exportDirPath = '.';
             }
 
             // We define a default name
-            $fileName = rtrim($defaultNamePrefix, "_") . "_" . number_format(microtime(true), 12, '', '');
+            $fileName = rtrim($defaultNamePrefix, '_') . '_' . number_format(microtime(true), 12, '', '');
             $fileName = self::appendContentTypeExtension($fileName, $contentType);
             $destinationFullFilePath = $exportDirPath . DIRECTORY_SEPARATOR . $fileName;
         }
 
         // If XML content type, we have to define a parent node name
-        if ($contentType === self::CONTENT_TYPE_XML) {
+        if (self::CONTENT_TYPE_XML === $contentType) {
             $content = ['element' => $content];
         }
 

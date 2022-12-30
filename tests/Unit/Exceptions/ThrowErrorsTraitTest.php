@@ -1,12 +1,14 @@
 <?php
-/**
- * This file is part of the ForteFramework package.
+
+declare(strict_types=1);
+
+/*
+ * This file is part of the ForteFramework Standard Library package.
  *
- * Copyright (c) 2019  Marco Spallanzani <marco@forteframework.com>
+ * (c) Marco Spallanzani <forteframework@gmail.com>
  *
- *  For the full copyright and license information,
- *  please view the LICENSE file that was distributed
- *  with this source code.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Forte\Stdlib\Tests\Unit\Exceptions;
@@ -17,8 +19,6 @@ use Forte\Stdlib\Exceptions\WrongParameterException;
 use Forte\Stdlib\Tests\Unit\BaseTest;
 
 /**
- * Class ThrowErrorsTraitTest.
- *
  * @package Tests\Unit\Helpers
  */
 class ThrowErrorsTraitTest extends BaseTest
@@ -31,8 +31,8 @@ class ThrowErrorsTraitTest extends BaseTest
     public function testThrowGeneralException(): void
     {
         $this->expectException(GeneralException::class);
-        $this->expectExceptionMessage("error message test.");
-        $this->getAnonymousClass()->throwGeneralException(self::BASE_TEST_MESSAGE, "test");
+        $this->expectExceptionMessage('error message test.');
+        $this->getAnonymousClass()->throwGeneralException(self::BASE_TEST_MESSAGE, 'test');
     }
 
     /**
@@ -50,7 +50,7 @@ class ThrowErrorsTraitTest extends BaseTest
         $this->assertEquals(
             [
                 'error_message' => 'error message test.',
-                'error_code'    => 0
+                'error_code'    => 0,
             ],
             $generalException->toArray()
         );
@@ -64,8 +64,8 @@ class ThrowErrorsTraitTest extends BaseTest
     public function testThrowMissingKeyException(): void
     {
         $this->expectException(MissingKeyException::class);
-        $this->expectExceptionMessage("error message test.");
-        $this->getAnonymousClass()->throwMissingKeyException("test_key", self::BASE_TEST_MESSAGE, "test");
+        $this->expectExceptionMessage('error message test.');
+        $this->getAnonymousClass()->throwMissingKeyException('test_key', self::BASE_TEST_MESSAGE, 'test');
     }
 
     /**
@@ -85,12 +85,11 @@ class ThrowErrorsTraitTest extends BaseTest
             [
                 'missing_key'   => 'test_key',
                 'error_message' => 'error message test.',
-                'error_code'    => 0
+                'error_code'    => 0,
             ],
             $missingKeyException->toArray()
         );
     }
-
 
     /**
      * Test ThrowErrorsTrait::throwWrongParameterException() method.
@@ -100,8 +99,8 @@ class ThrowErrorsTraitTest extends BaseTest
     public function testThrowWrongParameterException(): void
     {
         $this->expectException(WrongParameterException::class);
-        $this->expectExceptionMessage("error message test.");
-        $this->getAnonymousClass()->throwWrongParameterException(self::BASE_TEST_MESSAGE, "test");
+        $this->expectExceptionMessage('error message test.');
+        $this->getAnonymousClass()->throwWrongParameterException(self::BASE_TEST_MESSAGE, 'test');
     }
 
     /**
@@ -119,10 +118,9 @@ class ThrowErrorsTraitTest extends BaseTest
         $this->assertEquals(
             [
                 'error_message' => 'error message test.',
-                'error_code'    => 0
+                'error_code'    => 0,
             ],
             $wrongParameterException->toArray()
         );
     }
-
 }

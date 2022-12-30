@@ -1,35 +1,59 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the ForteFramework Standard Library package.
+ *
+ * (c) Marco Spallanzani <forteframework@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Forte\Stdlib\Tests\Unit;
 
 use Forte\Stdlib\Exceptions\GeneralException;
 use Forte\Stdlib\Exceptions\WrongParameterException;
 
 /**
- * Class ValidationTraitTest.
- *
  * @package Forte\Stdlib\Tests\Unit
  */
 class ValidationTraitTest extends BaseTest
 {
-    /**
-     * @return array
-     */
     public function parametersListProvider(): array
     {
         // parameter value |  accepted parameters | parameter name | expected result | expected exception | error message
         return [
             ['a real comment', ['value1', 'value', 'a real comment'], 'comment', true, false],
             [10, [10, 'value', 'a real comment'], 'comment', true, false],
-            ['xxx', ['value1', 'value', 'a real comment'], 'comment', false, true, "Unsupported comment with value [xxx]. Supported visibilities [value1, value, a real comment]."],
-            [10, ['value1', 'value', 'a real comment'], 'comment', false, true, "Unsupported comment with value [10]. Supported visibilities [value1, value, a real comment]."],
-            ['', ['value1', 'value', 'a real comment'], 'comment', false, true, "Unsupported comment with value []. Supported visibilities [value1, value, a real comment]."],
+            [
+                'xxx',
+                ['value1', 'value', 'a real comment'],
+                'comment',
+                false,
+                true,
+                'Unsupported comment with value [xxx]. Supported parameters: [value1, value, a real comment].',
+            ],
+            [
+                10,
+                ['value1', 'value', 'a real comment'],
+                'comment',
+                false,
+                true,
+                'Unsupported comment with value [10]. Supported parameters: [value1, value, a real comment].',
+            ],
+            [
+                '',
+                ['value1', 'value', 'a real comment'],
+                'comment',
+                false,
+                true,
+                'Unsupported comment with value []. Supported parameters: [value1, value, a real comment].',
+            ],
         ];
     }
 
-    /**
-     * @return array
-     */
     public function nonEmptyProvider(): array
     {
         // parameter value |  parameter name | expected result | expected exception | error message
@@ -44,9 +68,6 @@ class ValidationTraitTest extends BaseTest
         ];
     }
 
-    /**
-     * @return array
-     */
     public function stringListProvider(): array
     {
         // list |  list name | expected result | expected exception | error message
@@ -57,18 +78,48 @@ class ValidationTraitTest extends BaseTest
         ];
     }
 
-    /**
-     * @return array
-     */
     public function objectListProvider(): array
     {
         // list |  list name | expected result | expected exception | error message
         return [
-            [[new GeneralException(), new GeneralException(), new GeneralException()], GeneralException::class, 'exceptions', true, false],
-            [[new WrongParameterException(), new WrongParameterException(), new WrongParameterException()], WrongParameterException::class, 'exceptions', true, false],
-            [[new WrongParameterException(), new WrongParameterException(), new GeneralException()], WrongParameterException::class, 'exceptions', false, true, "exceptions list should contain only ".WrongParameterException::class." instances."],
-            [[new \stdClass(), new WrongParameterException(), new GeneralException()], WrongParameterException::class, 'exceptions', false, true, "exceptions list should contain only ".WrongParameterException::class." instances."],
-            [[1, new WrongParameterException(), new WrongParameterException()], WrongParameterException::class, 'exceptions', false, true, "exceptions list should contain only ".WrongParameterException::class." instances."],
+            [
+                [new GeneralException(), new GeneralException(), new GeneralException()],
+                GeneralException::class,
+                'exceptions',
+                true,
+                false,
+            ],
+            [
+                [new WrongParameterException(), new WrongParameterException(), new WrongParameterException()],
+                WrongParameterException::class,
+                'exceptions',
+                true,
+                false,
+            ],
+            [
+                [new WrongParameterException(), new WrongParameterException(), new GeneralException()],
+                WrongParameterException::class,
+                'exceptions',
+                false,
+                true,
+                'exceptions list should contain only ' . WrongParameterException::class . ' instances.',
+            ],
+            [
+                [new \stdClass(), new WrongParameterException(), new GeneralException()],
+                WrongParameterException::class,
+                'exceptions',
+                false,
+                true,
+                'exceptions list should contain only ' . WrongParameterException::class . ' instances.',
+            ],
+            [
+                [1, new WrongParameterException(), new WrongParameterException()],
+                WrongParameterException::class,
+                'exceptions',
+                false,
+                true,
+                'exceptions list should contain only ' . WrongParameterException::class . ' instances.',
+            ],
         ];
     }
 
@@ -77,12 +128,12 @@ class ValidationTraitTest extends BaseTest
      *
      * @dataProvider parametersListProvider
      *
-     * @param mixed $parameter
-     * @param array $acceptedParameters
-     * @param string $parameterName
-     * @param bool $expectedResult
-     * @param bool $expectedException
-     * @param string $errorMessage
+     * @param mixed $parameter The parameter to be checked.
+     * @param array $acceptedParameters The accepted parameters.
+     * @param string $parameterName The parameter name (for log purpose only).
+     * @param bool $expectedResult Whether the given parameter is contained in the given list of accepted parameters.
+     * @param bool $expectedException Whether an exception is expected.
+     * @param string $errorMessage The expected exception message.
      */
     public function testParametersList(
         $parameter,
@@ -90,7 +141,7 @@ class ValidationTraitTest extends BaseTest
         string $parameterName,
         bool $expectedResult,
         bool $expectedException,
-        string $errorMessage = ""
+        string $errorMessage = ''
     ): void
     {
         if ($expectedException) {
@@ -110,18 +161,18 @@ class ValidationTraitTest extends BaseTest
      *
      * @dataProvider stringListProvider
      *
-     * @param mixed $list
-     * @param string $listName
-     * @param bool $expectedResult
-     * @param bool $expectedException
-     * @param string $errorMessage
+     * @param mixed $list A list of objects/variables to be checked.
+     * @param string $listName The list name (for log purpose only).
+     * @param bool $expectedResult Whether the given list contains only strings.
+     * @param bool $expectedException Whether an exception is expected.
+     * @param string $errorMessage The expected exception message.
      */
     public function testStringList(
         $list,
         string $listName,
         bool $expectedResult,
         bool $expectedException,
-        string $errorMessage = ""
+        string $errorMessage = ''
     ): void
     {
         if ($expectedException) {
@@ -140,18 +191,18 @@ class ValidationTraitTest extends BaseTest
      *
      * @dataProvider nonEmptyProvider
      *
-     * @param $parameter
-     * @param string $parameterName
-     * @param bool $expectedResult
-     * @param bool $expectedException
-     * @param string $errorMessage
+     * @param mixed $parameter The parameter to be checked.
+     * @param string $parameterName The parameter name (for log purpose only).
+     * @param bool $expectedResult Whether the given parameter is not empty.
+     * @param bool $expectedException Whether an exception is expected.
+     * @param string $errorMessage The expected exception message.
      */
     public function testNonEmptyParameter(
         $parameter,
         string $parameterName,
         bool $expectedResult,
         bool $expectedException,
-        string $errorMessage = ""
+        string $errorMessage = ''
     ): void
     {
         if ($expectedException) {
@@ -170,12 +221,12 @@ class ValidationTraitTest extends BaseTest
      *
      * @dataProvider objectListProvider
      *
-     * @param array $list
-     * @param string $expectedClass
-     * @param string $parameterName
-     * @param bool $expectedResult
-     * @param bool $expectedException
-     * @param string $errorMessage
+     * @param array $list A list of objects to be checked.
+     * @param string $expectedClass The expected class of the given objects.
+     * @param string $parameterName An identifier of the given object list (for log purpose only).
+     * @param bool $expectedResult Whether the given objects are all of the given type.
+     * @param bool $expectedException Whether an exception is expected.
+     * @param string $errorMessage The expected exception message.
      */
     public function testObjectList(
         array $list,
@@ -183,7 +234,7 @@ class ValidationTraitTest extends BaseTest
         string $parameterName,
         bool $expectedResult,
         bool $expectedException,
-        string $errorMessage = ""
+        string $errorMessage = ''
     ): void
     {
         if ($expectedException) {
