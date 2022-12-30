@@ -18,7 +18,6 @@ use Forte\Stdlib\Exceptions\MissingKeyException;
 
 /**
  * @package Forte\Stdlib\Tests\Unit
- * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class ArrayUtilsTest extends BaseTest
 {

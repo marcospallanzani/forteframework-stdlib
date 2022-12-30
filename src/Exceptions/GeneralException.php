@@ -19,7 +19,6 @@ use Forte\Stdlib\ArrayableInterface;
  * Base exception for all ForteFramework based projects/classes/scripts.
  *
  * @package Forte\Stdlib\Exceptions
- * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class GeneralException extends \Exception implements ArrayableInterface
 {

@@ -19,7 +19,6 @@ use Forte\Stdlib\Tests\Unit\BaseTest;
 
 /**
  * @package Forte\Stdlib\Tests\Unit\Filters\Files
- * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class CopyTest extends BaseTest
 {

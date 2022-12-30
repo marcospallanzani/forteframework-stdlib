@@ -22,7 +22,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @package Tests\Unit
- * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 abstract class BaseTest extends TestCase
 {

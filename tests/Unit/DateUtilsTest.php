@@ -17,7 +17,6 @@ use Forte\Stdlib\DateUtils;
 
 /**
  * @package Forte\Stdlib\Tests\Unit
- * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class DateUtilsTest extends BaseTest
 {

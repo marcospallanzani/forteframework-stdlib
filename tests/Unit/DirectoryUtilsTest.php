@@ -17,7 +17,6 @@ use Forte\Stdlib\DirectoryUtils;
 
 /**
  * @package Forte\Stdlib\Tests\Unit
- * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class DirectoryUtilsTest extends BaseTest
 {

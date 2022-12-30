@@ -21,7 +21,6 @@ use Forte\Stdlib\Tests\Unit\BaseTest;
 
 /**
  * @package Forte\Stdlib\Tests\Unit\Readers
- * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class ConfigFileTest extends BaseTest
 {

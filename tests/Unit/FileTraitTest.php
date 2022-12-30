@@ -18,7 +18,6 @@ use Forte\Stdlib\FileTrait;
 
 /**
  * @package Forte\Stdlib\Tests\Unit
- * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class FileTraitTest extends BaseTest
 {

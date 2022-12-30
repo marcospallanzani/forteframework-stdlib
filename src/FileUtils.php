@@ -29,7 +29,6 @@ use Symfony\Component\Yaml\Yaml as YamlReader;
  * Utility class for handling various file actions.
  *
  * @package Forte\Stdlib
- * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class FileUtils
 {

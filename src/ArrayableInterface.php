@@ -17,7 +17,6 @@ namespace Forte\Stdlib;
  * Interface ArrayableInterface.
  *
  * @package Forte\Stdlib
- * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 interface ArrayableInterface
 {

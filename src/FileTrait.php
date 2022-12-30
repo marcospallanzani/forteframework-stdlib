@@ -22,7 +22,6 @@ use Laminas\Validator\File\NotExists;
  * Trait with helper methods for all file access actions.
  *
  * @package Forte\Stdlib
- * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 trait FileTrait
 {

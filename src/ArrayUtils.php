@@ -19,7 +19,6 @@ use Forte\Stdlib\Exceptions\MissingKeyException;
  * Utility class for handling different array actions.
  *
  * @package Forte\Stdlib
- * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class ArrayUtils
 {

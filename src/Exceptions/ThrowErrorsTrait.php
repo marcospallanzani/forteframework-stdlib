@@ -17,7 +17,6 @@ namespace Forte\Stdlib\Exceptions;
  * Methods to easily throw exceptions.
  *
  * @package Forte\Stdlib\Exceptions
- * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 trait ThrowErrorsTrait
 {

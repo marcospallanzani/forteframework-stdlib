@@ -18,7 +18,6 @@ use Forte\Stdlib\FileUtils;
 
 /**
  * @package Forte\Stdlib\Tests\Unit
- * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class FileUtilsTest extends BaseTest
 {

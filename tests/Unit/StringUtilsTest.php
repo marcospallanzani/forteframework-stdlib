@@ -17,7 +17,6 @@ use Forte\Stdlib\StringUtils;
 
 /**
  * @package Forte\Stdlib\Tests\Unit
- * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class StringUtilsTest extends BaseTest
 {

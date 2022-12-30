@@ -17,7 +17,6 @@ namespace Forte\Stdlib;
  * Set of methods to handle a directory and its content.
  *
  * @package Forte\Stdlib
- * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class DirectoryUtils
 {

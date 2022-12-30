@@ -17,7 +17,6 @@ use Forte\Stdlib\ClassAccessTrait;
 
 /**
  * @package Forte\Stdlib\Tests\Unit
- * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class ClassAccessTraitTest extends BaseTest
 {

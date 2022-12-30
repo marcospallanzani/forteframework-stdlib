@@ -20,7 +20,6 @@ use Throwable;
  * in a given data structure (e.g. array, configuration file, etc.).
  *
  * @package Forte\Stdlib\Exceptions
- * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class MissingKeyException extends GeneralException
 {

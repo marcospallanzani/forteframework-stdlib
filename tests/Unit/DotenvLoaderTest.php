@@ -18,7 +18,6 @@ use Forte\Stdlib\Exceptions\GeneralException;
 
 /**
  * @package Forte\Stdlib\Tests\Unit
- * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class DotenvLoaderTest extends BaseTest
 {

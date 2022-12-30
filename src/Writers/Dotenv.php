@@ -20,7 +20,6 @@ use Laminas\Config\Writer\AbstractWriter;
  * Write values to files.
  *
  * @package Forte\Stdlib\Writers
- * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class Dotenv extends AbstractWriter
 {

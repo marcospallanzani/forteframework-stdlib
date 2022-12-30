@@ -21,7 +21,6 @@ use Laminas\Filter\Word;
  * Utility class for handling various string actions.
  *
  * @package Forte\Stdlib
- * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class StringUtils
 {

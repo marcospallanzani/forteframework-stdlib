@@ -23,7 +23,6 @@ use PhpOption\Option;
  * Methods to read a .env file and load its content.
  *
  * @package Forte\Stdlib
- * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class DotenvLoader
 {

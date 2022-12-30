@@ -15,7 +15,6 @@ namespace Forte\Stdlib\Exceptions;
 
 /**
  * @package Forte\Stdlib\Exceptions
- * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class WrongParameterException extends GeneralException
 {

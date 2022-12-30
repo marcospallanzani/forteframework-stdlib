@@ -17,7 +17,6 @@ namespace Forte\Stdlib;
  * A trait that identifies class constants.
  *
  * @package Forte\Stdlib
- * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 trait ClassAccessTrait
 {

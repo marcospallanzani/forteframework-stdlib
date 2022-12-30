@@ -19,7 +19,6 @@ use Forte\Stdlib\Exceptions\GeneralException;
  * Methods to handle Date objects.
  *
  * @package Forte\Stdlib
- * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class DateUtils
 {

@@ -20,7 +20,6 @@ use Forte\Stdlib\Tests\Unit\BaseTest;
 
 /**
  * @package Tests\Unit\Helpers
- * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class ThrowErrorsTraitTest extends BaseTest
 {

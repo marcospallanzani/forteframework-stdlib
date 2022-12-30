@@ -24,7 +24,6 @@ use Forte\Stdlib\FileUtils;
  * content type constants for a list of supported file types.
  *4
  * @package Forte\Stdlib\Readers
- * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class ConfigFile implements ArrayableInterface
 {

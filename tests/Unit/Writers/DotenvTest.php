@@ -20,7 +20,6 @@ use Forte\Stdlib\Writers\Dotenv as DotenvWriter;
 
 /**
  * @package Forte\Stdlib\Tests\Unit\Writers
- * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 class DotenvTest extends BaseTest
 {

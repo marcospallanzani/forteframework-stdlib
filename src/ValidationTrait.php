@@ -19,7 +19,6 @@ use Forte\Stdlib\Exceptions\WrongParameterException;
  * Validation methods.
  *
  * @package Forte\Stdlib
- * @author  Marco Spallanzani <forteframework@gmail.com>
  */
 trait ValidationTrait
 {
